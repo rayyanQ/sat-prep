@@ -4,6 +4,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 
 const PreTest = () => {
   return (
@@ -12,18 +13,16 @@ const PreTest = () => {
       <div className="h-full flex flex-col justify-center items-center">
         <h2 className="text-2xl mb-4">Your Tests</h2>
         <Card className="shadow-md w-96">
-          <CardHeader>
-            <CardTitle>You Have No Upcoming Tests</CardTitle>
-          </CardHeader>
           <CardContent>
-            <p>Tests appear here a few weeks before test day. <b>If you got a paper ticket from your school, <a>sign out</a> and sign in with it.</b></p>
+          <h3 className="text-2xl font-bold">Timing</h3>
+            <p>hello world</p>
           </CardContent>
         </Card>
       </div>
 
-      <div className="bottom-0 flex flex-row justify-end items-center space-x-4 h-16 w-full px-4 border-dashed border-black border-t-2">
-        <button>Start Test</button>
-        <button>View Results</button>
+      <div className="bottom-0 flex flex-row justify-end items-center space-x-4 h-20 w-full px-6 border-t-2">
+        <Button>Back</Button>
+        <Button>Next</Button>
       </div>
 
     </div>
