@@ -4,11 +4,31 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
+  EllipsisVertical,
+  PencilLine,
+  Bookmark,
+  CircleHelp,
+  Keyboard,
+  PersonStanding,
+  ScanLine,
+  DoorOpen,
+  TriangleAlert
+} from "lucide-react";
 
 const Test = () => {
   return (
     <main className="flex flex-col justify-between items-center w-full h-screen">
       <TestHeader />
+
       <div className="h-full w-full flex flex-col justify-center items-center">
         <ResizablePanelGroup direction="horizontal" className="h-full w-full">
           <ResizablePanel defaultSize={50}>
@@ -24,12 +44,13 @@ const Test = () => {
           <ResizablePanel defaultSize={50}>
             <div className="min-w-48 w-full max-w-[700px] flex flex-col justify-start items-center mx-auto px-10 py-6">
              
-              <div className="w-full h-8 pb-1 flex justify-between items-center bg-neutral-100 border-b-2 border-neutral-950 border-dashed">
-
-                  <span className="flex justify-center items-center bg-neutral-950 text-white size-8">
+              <div className="w-full h-8 flex justify-between items-center bg-neutral-200 border-b-2 border-neutral-950 border-dashed">
+                <div className="flex flex-row">
+                  <span className="flex justify-center items-center bg-neutral-950 text-white h-full aspect-square">
                     <b>1</b>
                   </span>
-                
+                  <Bookmark size={20} />
+                </div>
                 <div>ABC</div>
               </div>
 
@@ -67,6 +88,7 @@ const Test = () => {
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>
+      
       <TestFooter />
     </main>
   );
@@ -77,10 +99,41 @@ export default Test;
 const TestHeader = () => {
   return (
     <header className="top-0 flex flex-row justify-between items-center w-full border-neutral-950 border-dashed border-b-2">
-      <div className="w-full h-20 px-10 flex flex-row justify-between items-center">
-        <div>Section 1: Reading and Writing<br />Direction</div>
+      <div className="w-full h-20 px-10 grid grid-cols-3">
 
-        
+        <div className="col-span-1 flex flex-col justify-center items-start space-y-2">
+          <h4 className="text-lg font-medium">Section 1: Reading and Writing</h4>
+          <small className="text-sm font-medium">Direction</small>
+        </div>
+
+        <div className="col-span-1 flex flex-col justify-center items-center space-y-2">
+          <h4 className="text-lg font-medium">0:00</h4>
+          <small className="text-sm font-medium border border-neutral-950 rounded-full px-3">Hide</small>
+        </div>
+
+        <div className="col-span-1 flex flex-row justify-end items-center">
+          <div className="flex flex-col justify-center items-center p-2">
+            <PencilLine size={20} />
+            <small className="text-sm font-medium">Annotate</small>
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <div className="flex flex-col justify-center items-center p-2">
+                <EllipsisVertical size={20} />
+                <small className="text-sm font-medium">More</small>
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem><CircleHelp className="mr-2 h-4 w-4" />Help</DropdownMenuItem>
+              <DropdownMenuItem><Keyboard className="mr-2 h-4 w-4" />Shortcuts</DropdownMenuItem>
+              <DropdownMenuItem><PersonStanding className="mr-2 h-4 w-4" />Assistive Technology</DropdownMenuItem>
+              <DropdownMenuItem><ScanLine className="mr-2 w-4 h-4" />Line Reader</DropdownMenuItem>
+              <DropdownMenuItem><DoorOpen className="mr-2 w-4 h-4" />Unscheduled Break</DropdownMenuItem>
+              <DropdownMenuItem><TriangleAlert className="mr-2 w-4 h-4" />Exit the Exam</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
       </div>
     </header>
   );

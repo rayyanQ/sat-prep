@@ -1,0 +1,16 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.5" width="199" height="199" rx="19.5" stroke="black"/>
+<path d="M0.5 40.5H199.5V180C199.5 190.77 190.77 199.5 180 199.5H20C9.23045 199.5 0.5 190.77 0.5 180V40.5Z" fill="#009CDE" stroke="black"/>
+<path d="M1 40H168.5L90 128L35.8926 191.78C23.8314 205.998 0.593192 197.435 0.641369 178.79L1 40Z" fill="#71C5E8"/>
+<path d="M32 54.5H168C170.485 54.5 172.5 56.5147 172.5 59V199.5H27.5V59C27.5 56.5147 29.5147 54.5 32 54.5Z" fill="white" stroke="black"/>
+<path d="M28 197.5L155 55H168C170.184 55 172 56.5 172 59V199H28V197.5Z" fill="#009CDE" fill-opacity="0.1"/>
+<rect x="40" y="70" width="120" height="20" fill="#D9D9D9"/>
+<rect x="40" y="70" width="20" height="20" fill="#6D6D6D"/>
+<rect x="40.5" y="100.5" width="119" height="19" stroke="black"/>
+<rect x="40.5" y="130.5" width="119" height="19" stroke="black"/>
+<rect x="40.5" y="160.5" width="119" height="19" stroke="black"/>
+<path d="M20 0.5H180C190.77 0.5 199.5 9.23045 199.5 20V40.5H0.5V20C0.5 9.23045 9.23045 0.5 20 0.5Z" stroke="black"/>
+<circle cx="17" cy="20" r="5" fill="#DA4D4D"/>
+<circle cx="32" cy="20" r="5" fill="#EAED4E"/>
+<circle cx="47" cy="20" r="5" fill="#50DA4D"/>
+</svg>

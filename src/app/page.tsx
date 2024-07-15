@@ -8,44 +8,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
+import { Header } from "@/components/header"
+import TestIcon from "../../public/test-icon.svg"
+import Image from "next/image"
 
 
 const Home = () => {
   return (
     <div>
-      <HomeHeader />
+      <Header />
       <HomeBody />
     </div>
   );
 }
 
-const HomeHeader = () => {
-  return (
-    <header className="flex flex-col justify-start items-center bg-blue-100">
 
-      <div className="container h-14 flex flex-row justify-between items-center">
-
-        <div>LOGO</div>
-        <div className="flex flex-row items-center space-x-4">
-          <p>Rayyan Quraishi</p>
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-        </div>
-
-      </div>
-
-      <div className="container h-28 py-6 flex flex-row items-end">
-        <h1 className="text-4xl font-light text-blue-600">
-          Welcome, Rayyan! Good luck on test day!
-        </h1>
-      </div>
-
-    </header>
-  );
-}
 
 const HomeBody = () => {
   return (
@@ -58,17 +35,24 @@ const HomeBody = () => {
             <Tabs></Tabs>
           </div>
           <div>
-            <a href="#">Don&apos;t see your test here</a>
+            <a href="#">See all tests</a>
           </div>
         </div>
 
         <div className="flex flex-row justify-start items-center">
           <Card className="shadow-md">
             <CardHeader>
-              <CardTitle>You Have No Upcoming Tests</CardTitle>
+              <CardTitle>You Have No Active Tests</CardTitle>
             </CardHeader>
             <CardContent>
-              <p>Tests appear here a few weeks before test day. <b>If you got a paper ticket from your school, <a>sign out</a> and sign in with it.</b></p>
+              <p>You have completed all available tests.</p>
+            </CardContent>
+          </Card>
+          <Card className="aspect-square block shadow-md">
+            <CardHeader></CardHeader>
+            <CardContent className="w-full flex flex-col justify-center items-center">
+              <Image src={TestIcon} alt="Test Icon" height={100} width={100} className="m-2" />
+              <p>Full Test #1</p>
             </CardContent>
           </Card>
         </div>
