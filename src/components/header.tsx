@@ -8,7 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
  */
 const Header = ({ loggedin=false } : { loggedin?: boolean }) => {
   return (
-    <header className="flex flex-col justify-start items-center bg-neutral-100">
+    <header className="flex flex-col justify-start items-center border-b">
 
       <div className="container h-14 flex flex-row justify-between items-center">
 
