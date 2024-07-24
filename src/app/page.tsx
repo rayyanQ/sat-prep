@@ -19,12 +19,6 @@ const TEST_DATA = [
     name: "Full-test 1",
   },
 ];
-type Payment = {
-  id: string
-  amount: number
-  status: "pending" | "processing" | "success" | "failed"
-  email: string
-}
  
 const payment: Payment[] = [
   {
