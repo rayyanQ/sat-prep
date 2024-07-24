@@ -8,17 +8,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Header } from "@/components/header"
+import Header from "@/components/Header"
+import TestCard from "@/components/TestCard"
 import TestIcon from "../../public/test-icon.svg"
 import Image from "next/image"
 
 
 const Home = () => {
   return (
-    <div>
+    <>
       <Header />
       <HomeBody />
-    </div>
+    </>
   );
 }
 
@@ -39,7 +40,7 @@ const HomeBody = () => {
           </div>
         </div>
 
-        <div className="flex flex-row justify-start items-center">
+        <div className="flex flex-row justify-start items-center space-x-10">
           <Card className="shadow-md">
             <CardHeader>
               <CardTitle>You Have No Active Tests</CardTitle>
@@ -55,6 +56,10 @@ const HomeBody = () => {
               <p>Full Test #1</p>
             </CardContent>
           </Card>
+          <TestCard>
+            <h2>test</h2>
+            <p>fslfksjl</p>
+          </TestCard>
         </div>
 
       </section>

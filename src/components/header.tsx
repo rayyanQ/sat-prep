@@ -1,12 +1,25 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
-export const Header = () => {
+/**
+ * TODO
+ * - check if user is logged in or not
+ *    and accordingly show the right side of the header
+ */
+const Header = () => {
   return (
-    <header className="flex flex-col justify-start items-center bg-blue-100">
+    <header className="flex flex-col justify-start items-center bg-neutral-100">
 
       <div className="container h-14 flex flex-row justify-between items-center">
 
-        <div>SAT Prep</div>
+        <div className="flex flex-row items-center space-x-10">
+          <span className="font-bold">SAT Prep</span>
+          <nav className="flex flex-row items-center space-x-4">
+            <a href="#">Home</a>
+            <a href="#">Tests</a>
+            <a href="#">Questions</a>
+          </nav>
+        </div>
+
         <div className="flex flex-row items-center space-x-4">
           <p>Rayyan Quraishi</p>
           <Avatar>
@@ -17,12 +30,8 @@ export const Header = () => {
 
       </div>
 
-      <div className="container h-28 py-6 flex flex-row items-end">
-        <h1 className="text-4xl font-light text-blue-600">
-          Welcome, Rayyan! Good luck on test day!
-        </h1>
-      </div>
-
     </header>
   );
 }
+
+export default Header;
