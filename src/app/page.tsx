@@ -1,6 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Header from "@/components/Header"
 import TestCard from "@/components/TestCard"
+import { Payment, columns } from "@/components/TestTable/columns"
+import { DataTable } from "@/components/TestTable/data-table"
 import TestIcon from "../../public/test-icon.svg"
 import Image from "next/image"
 
@@ -17,7 +19,28 @@ const TEST_DATA = [
     name: "Full-test 1",
   },
 ];
-
+type Payment = {
+  id: string
+  amount: number
+  status: "pending" | "processing" | "success" | "failed"
+  email: string
+}
+ 
+const payment: Payment[] = [
+  {
+    id: "728ed52f",
+    amount: 100,
+    status: "pending",
+    email: "m@example.com",
+  },
+  {
+    id: "489e1d42",
+    amount: 125,
+    status: "processing",
+    email: "example@gmail.com",
+  },
+  // ...
+]
 
 // Main Home page component
 const Home = () => {
@@ -25,14 +48,14 @@ const Home = () => {
     <>
       <Header loggedin={false} />
       <main className="w-full flex flex-col justify-center items-start">
-        <TestSection data={TEST_DATA} />
+        <TestSection />
         <QuestionSection />
       </main>
     </>
   );
 }
 
-const TestSection = ({data}: {}) => {
+const TestSection = () => {
   return (
     <section className="container py-6">
         <div className="flex flex-row justify-between items-center pb-2">
@@ -45,20 +68,14 @@ const TestSection = ({data}: {}) => {
         </div>
 
         <div className="flex flex-row justify-start items-center space-x-10">
-          <TestCard>
-            <Image src={TestIcon} alt="Test Icon" height={100} width={100} className="m-2" />
-            <h2>Mini-test 1</h2>
-          </TestCard>
-          <TestCard>
-            <Image src={TestIcon} alt="Test Icon" height={100} width={100} className="m-2" />
-            <h2>test</h2>
-            <p>fslfksjl</p>
-          </TestCard>
-          <TestCard>
-            <Image src={TestIcon} alt="Test Icon" height={100} width={100} className="m-2" />
-            <h2>test</h2>
-            <p>fslfksjl</p>
-          </TestCard>
+          {
+            TEST_DATA.map((test, index) => 
+              <TestCard key={test.name + index}>
+                <Image src={TestIcon} alt="Test Icon" height={100} width={100} className="m-2" />
+                <h2>{test.name}</h2>
+              </TestCard>
+            )
+          }
         </div>
       </section>
   );
@@ -73,8 +90,12 @@ const QuestionSection = () => {
           <Tabs></Tabs>
         </div>
         <div>
-          <a href="#">See all tests</a>
+          <a href="#">See all questions</a>
         </div>
+      </div>
+
+      <div className="flex flex-row justify-start items-center space-x-10">
+        <DataTable columns={columns} data={payment} />
       </div>
     </section>
   );
