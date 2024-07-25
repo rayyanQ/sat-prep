@@ -4,7 +4,7 @@ const H1 = ({children}: {children: React.ReactNode}) => {
 }
 
 const H2 = ({children}: {children: React.ReactNode}) => {
-  return <h2 className="text-2xl mb-4">{children}</h2>;
+  return <h2 className="text-2xl">{children}</h2>;
 }
 
 const H3 = ({children}: {children: React.ReactNode}) => {

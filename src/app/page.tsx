@@ -1,8 +1,9 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Header from "@/components/Header"
 import TestCard from "@/components/TestCard"
-import { Payment, columns } from "@/components/TestTable/columns"
+import { Question, columns } from "@/components/TestTable/columns"
 import { DataTable } from "@/components/TestTable/data-table"
+import { H2 } from "@/components/ui/heading"
 import TestIcon from "../../public/test-icon.svg"
 import Image from "next/image"
 
@@ -20,20 +21,67 @@ const TEST_DATA = [
   },
 ];
  
-const payment: Payment[] = [
+const questions: Question[] = [
   {
-    id: "728ed52f",
-    amount: 100,
-    status: "pending",
-    email: "m@example.com",
+    uid: "al56d",
+    id: 1,
+    title: "Algebra word problem",
+    section: "Math",
+    domain: "Algebra",
+    topic: "Linear equation in 1 variable",
+    difficulty: "Easy",
+    status: "Incomplete",
   },
   {
-    id: "489e1d42",
-    amount: 125,
-    status: "processing",
-    email: "example@gmail.com",
+    uid: "al9sx",
+    id: 2,
+    title: "Algebra word problem 2",
+    section: "Math",
+    domain: "Algebra",
+    topic: "Linear functions",
+    difficulty: "Easy",
+    status: "Complete",
   },
-  // ...
+  {
+    uid: "al56d",
+    id: 3,
+    title: "Purpose of underlined text",
+    section: "English",
+    domain: "Craft and Structure",
+    topic: "-",
+    difficulty: "Easy",
+    status: "Incomplete",
+  },
+  {
+    uid: "al56d",
+    id: 4,
+    title: "Algebra word problem",
+    section: "Math",
+    domain: "Algebra",
+    topic: "Linear equation in 1 variable",
+    difficulty: "Easy",
+    status: "Incomplete",
+  },
+  {
+    uid: "al9sx",
+    id: 5,
+    title: "Algebra word problem 2",
+    section: "Math",
+    domain: "Algebra",
+    topic: "Linear functions",
+    difficulty: "Easy",
+    status: "Complete",
+  },
+  {
+    uid: "al56d",
+    id: 6,
+    title: "Purpose of underlined text",
+    section: "English",
+    domain: "Craft and Structure",
+    topic: "-",
+    difficulty: "Easy",
+    status: "Incomplete",
+  },
 ]
 
 // Main Home page component
@@ -54,7 +102,7 @@ const TestSection = () => {
     <section className="container py-6">
         <div className="flex flex-row justify-between items-center pb-2">
           <div>
-            <h3 className="text-2xl font-bold">Recommended Tests</h3>
+            <H2>Recommended Tests</H2>
           </div>
           <div>
             <a href="#">See all tests</a>
@@ -80,16 +128,16 @@ const QuestionSection = () => {
     <section className="container py-6">
       <div className="flex flex-row justify-between items-center pb-2">
         <div>
-          <h3 className="text-2xl font-bold">Questions</h3>
+          <H2>Questions</H2>
           <Tabs></Tabs>
         </div>
         <div>
-          <a href="#">See all questions</a>
+          <a href="#" className="border-b border-neutral-950">See all questions</a>
         </div>
       </div>
 
-      <div className="flex flex-row justify-start items-center space-x-10">
-        <DataTable columns={columns} data={payment} />
+      <div className="flex flex-col justify-center items-center">
+        <DataTable columns={columns} data={questions} />
       </div>
     </section>
   );

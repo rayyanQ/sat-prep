@@ -15,9 +15,9 @@ const Header = ({ loggedin=false } : { loggedin?: boolean }) => {
         <div className="flex flex-row items-center space-x-10">
           <span className="font-bold">SAT Prep</span>
           <nav className="flex flex-row items-center space-x-4">
-            <a href="#">Home</a>
-            <a href="#">Tests</a>
-            <a href="#">Questions</a>
+            <Link href="/">Home</Link>
+            <Link href="/tests">Tests</Link>
+            <Link href="/questions">Questions</Link>
           </nav>
         </div>
 
