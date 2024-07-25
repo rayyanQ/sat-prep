@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Dot } from "lucide-react"
+import { Dot, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
 
 export function FilterDropdown() {
   const [section, setSection] = useState("all")
