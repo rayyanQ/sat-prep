@@ -88,7 +88,7 @@ const questions: Question[] = [
 const Home = () => {
   return (
     <>
-      <Header loggedin={false} />
+      <Header />
       <main className="w-full flex flex-col justify-center items-start">
         <TestSection />
         <QuestionSection />
@@ -128,7 +128,7 @@ const QuestionSection = () => {
     <section className="container py-6">
       <div className="flex flex-row justify-between items-center pb-2">
         <div>
-          <H2>Questions</H2>
+          <H2>Question Bank</H2>
           <Tabs></Tabs>
         </div>
         <div>
