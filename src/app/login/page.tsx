@@ -9,7 +9,7 @@ import { H2 } from "@/components/ui/heading"
 export default function LoginPage() {
   return (
     <div className="w-full h-screen flex flex-col">
-      <Header loggedin={false} />
+      <Header />
       <main className="w-full h-full flex flex-col justify-center items-center">
         <Card className="p-6">
           <CardHeader className="w-full text-center">

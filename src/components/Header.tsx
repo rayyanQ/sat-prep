@@ -1,4 +1,14 @@
+import { createClient } from '@/lib/supabase/server'
+
 import Link from "next/link"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 /**
@@ -6,7 +16,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
  * - check if user is logged in or not
  *    and accordingly show the right side of the header
  */
-const Header = ({ loggedin=false } : { loggedin?: boolean }) => {
+async function Header() {
+
+  const supabase = createClient()
+  const { data, error } = await supabase.auth.getUser()
+  let loggedin = error || !data?.user ? false : true;
+
   return (
     <header className="flex flex-col justify-start items-center border-b">
 
@@ -26,10 +41,19 @@ const Header = ({ loggedin=false } : { loggedin?: boolean }) => {
             loggedin ?
             <>
               <p>Rayyan Quraishi</p>
-              <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Avatar>
+                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="mt-1" align="end">
+                  <Link href="/profile"><DropdownMenuItem>Profile</DropdownMenuItem></Link>
+                  <Link href="/settings"><DropdownMenuItem>Settings</DropdownMenuItem></Link>
+                  <Link href="/logoff"><DropdownMenuItem>Log off</DropdownMenuItem></Link>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </> :
             <>
               <Link href="/login">Login</Link>
