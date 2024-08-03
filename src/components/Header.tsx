@@ -31,8 +31,6 @@ async function Header() {
           <span className="font-bold">SAT Prep</span>
           <nav className="flex flex-row items-center space-x-4">
             <Link href="/">Home</Link>
-            <Link href="/tests">Tests</Link>
-            <Link href="/questions">Questions</Link>
           </nav>
         </div>
 
