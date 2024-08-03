@@ -11,11 +11,6 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
-/**
- * TODO
- * - check if user is logged in or not
- *    and accordingly show the right side of the header
- */
 async function Header() {
 
   const supabase = createClient()
@@ -40,7 +35,7 @@ async function Header() {
           {
             loggedin ?
             <>
-              <p>Rayyan Quraishi</p>
+              <p className="hidden md:block">Rayyan Quraishi</p>
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Avatar>
