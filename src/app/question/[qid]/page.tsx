@@ -45,8 +45,8 @@ export default async function Question({ params }: { params: { qid: string } }) 
     // Filters
     .eq('serial_number', params.qid)
 
-  if (!question) {
-    // TODO: redirect to 404 or question does not exist
+  if (error !== null || question === null || question.length === 0) {
+    // TODO: redirect to 404 or 'question does not exist'
     redirect('/')
   }
 
