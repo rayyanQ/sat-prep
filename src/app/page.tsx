@@ -90,49 +90,19 @@ const Home = () => {
     <>
       <Header />
       <main className="w-full flex flex-col justify-center items-start">
-        <TestSection />
         <QuestionSection />
       </main>
     </>
   );
 }
 
-const TestSection = () => {
-  return (
-    <section className="container py-6">
-        <div className="flex flex-row justify-between items-center pb-2">
-          <div>
-            <H2>Recommended Tests</H2>
-          </div>
-          <div>
-            <a href="#">See all tests</a>
-          </div>
-        </div>
-
-        <div className="flex flex-row justify-start items-center space-x-10">
-          {
-            TEST_DATA.map((test, index) => 
-              <TestCard key={test.name + index}>
-                <Image src={TestIcon} alt="Test Icon" height={100} width={100} className="m-2" />
-                <h2>{test.name}</h2>
-              </TestCard>
-            )
-          }
-        </div>
-      </section>
-  );
-}
-
 const QuestionSection = () => {
   return (
     <section className="container py-6">
-      <div className="flex flex-row justify-between items-center pb-2">
+      <div className="flex flex-row justify-start items-center pb-2">
         <div>
           <H2>Question Bank</H2>
           <Tabs></Tabs>
-        </div>
-        <div>
-          <a href="#" className="border-b border-neutral-950">See all questions</a>
         </div>
       </div>
 
