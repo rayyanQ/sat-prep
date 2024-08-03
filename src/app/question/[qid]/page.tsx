@@ -46,10 +46,9 @@ export default async function Question({ params }: { params: { qid: string } }) 
     .eq('serial_number', params.qid)
 
   if (!question) {
+    // TODO: redirect to 404 or question does not exist
     redirect('/')
   }
-
-  console.log(question);
 
 
   return (
