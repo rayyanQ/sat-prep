@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Menu } from "lucide-react"
 
 /**
  * TODO
@@ -23,14 +24,15 @@ async function Header() {
   let loggedin = error || !data?.user ? false : true;
 
   return (
-    <header className="flex flex-col justify-start items-center border-b">
+    <header className="w-full flex flex-col justify-start items-center border-b">
 
       <div className="container h-14 flex flex-row justify-between items-center">
 
-        <div className="flex flex-row items-center space-x-10">
-          <span className="font-bold">SAT Prep</span>
+        <div className="flex flex-row items-center space-x-4">
+          <Menu size={20} />
+          <span className="font-bold"><Link href="/">SAT Prep</Link></span>
           <nav className="flex flex-row items-center space-x-4">
-            <Link href="/">Home</Link>
+            {/*<Link href="/">Home</Link>*/}
           </nav>
         </div>
 
@@ -38,7 +40,6 @@ async function Header() {
           {
             loggedin ?
             <>
-              <p>Rayyan Quraishi</p>
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Avatar>
