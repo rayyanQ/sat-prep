@@ -27,8 +27,9 @@ import {
   DoorOpen,
   TriangleAlert
 } from "lucide-react";
-// TODO: add types for he
-import he from 'he';
+import he from "he";
+// TODO: add declaration file
+import katex from "katex";
 
 export default async function Question({ params }: { params: { qid: string } }) {
 
@@ -50,6 +51,10 @@ export default async function Question({ params }: { params: { qid: string } }) 
     redirect('/')
   }
 
+  let math = katex.renderToString("c = \\pm\\sqrt{a^2 + b^2}", {
+    throwOnError: false
+  });
+
 
   return (
     <main className="flex flex-col justify-between items-center w-full h-screen">
@@ -67,6 +72,7 @@ export default async function Question({ params }: { params: { qid: string } }) 
             <div className="min-w-48 w-full max-w-[700px] flex flex-col justify-start items-center mx-auto px-10 py-6">
               <p className="w-full flex justify-start items-center my-6 font-serif">
                 {he.decode(question[0]?.context)}
+                <span dangerouslySetInnerHTML={{ __html: math }}></span>
               </p>
             </div>
           </ResizablePanel>
