@@ -1,25 +1,13 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Header from "@/components/Header"
 import TestCard from "@/components/TestCard"
-import { Question, columns } from "@/components/TestTable/columns"
-import { DataTable } from "@/components/TestTable/data-table"
+import { Question, columns } from "@/components/QuestionTable/columns"
+import { DataTable } from "@/components/QuestionTable/data-table"
 import { H2 } from "@/components/ui/heading"
 import TestIcon from "../../public/test-icon.svg"
 import Image from "next/image"
 
 
-// Temp Data
-const TEST_DATA = [
-  {
-    name: "Mini-test 1",
-  },
-  {
-    name: "Mini-test 2",
-  },
-  {
-    name: "Full-test 1",
-  },
-];
  
 const questions: Question[] = [
   {
@@ -100,10 +88,7 @@ const QuestionSection = () => {
   return (
     <section className="container py-6">
       <div className="flex flex-row justify-start items-center pb-2">
-        <div>
-          <H2>Question Bank</H2>
-          <Tabs></Tabs>
-        </div>
+        <H2>Question Bank</H2>
       </div>
 
       <div className="flex flex-col justify-center items-center">
