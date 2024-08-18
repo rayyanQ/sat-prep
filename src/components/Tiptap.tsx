@@ -21,6 +21,8 @@ const Tiptap = () => {
    * - add a button to insert a math block
    * - add a button to insert images
    * - add a button to insert tables
+   * - add gap cursor
+   * - put editor in focus, when user clicks on the editor box
    */
   const editor = useEditor({
     extensions: [
