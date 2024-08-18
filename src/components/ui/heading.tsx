@@ -12,7 +12,7 @@ const H3 = ({children}: {children: React.ReactNode}) => {
 }
 
 const H4 = ({children}: {children: React.ReactNode}) => {
-  return <h4 className="text-lg font-medium">{children}</h4>;
+  return <h4 className="text-lg font-medium mb-1">{children}</h4>;
 }
 
 export { H1, H2, H3, H4 };
