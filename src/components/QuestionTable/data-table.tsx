@@ -31,6 +31,38 @@ interface DataTableProps<TData, TValue> {
   data: TData[]
 }
 
+// Filters
+const filters = [
+  {
+    title: "Sections",
+    options: [
+      { label: "Math", value: "Math" },
+      { label: "English", value: "English" },
+    ],
+  },
+  {
+    title: "Domains",
+    options: [
+      { label: "Algebra", value: "Algebra" },
+      { label: "Craft and Structure", value: "Craft and Structure" },
+    ],
+  },
+  {
+    title: "Difficulty",
+    options: [
+      { label: "Easy", value: "Easy" },
+      { label: "Medium", value: "Medium" },
+    ],
+  },
+  {
+    title: "Status",
+    options: [
+      { label: "Complete", value: "Complete" },
+      { label: "Incomplete", value: "Incomplete" },
+    ],
+  },
+];
+
 export function DataTable<TData, TValue>({
   columns,
   data,
@@ -66,8 +98,21 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
+        <div className="flex flex-row space-x-2">
+          {
+            filters.map((filter) => (
+              <FilterDropdown
+                key={filter.title}
+                title={filter.title}
+                options={filter.options}
+                onChange={(values) => {
+                  table.getColumn(filter.title.toLowerCase())?.setFilterValue(values)
+                }}
+              />
+            ))
+          }
+        </div>
         <div>
-          <FilterDropdown />
         </div>
       </div>
       <div className="rounded-md border">
