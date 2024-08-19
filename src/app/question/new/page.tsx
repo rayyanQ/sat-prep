@@ -17,12 +17,12 @@ import { Checkbox } from '@/components/ui/checkbox';
 
 
 export default async function NewQuestion({ params }: { params: { qid: string } }) {
-  const supabase = createClient()
+  /*const supabase = createClient()
 
   const { data: userData, error: userError } = await supabase.auth.getUser()
   if (userError || !userData?.user) {
     redirect('/login')
-  }
+  }*/
 
   return(
     <main className="flex flex-col justify-between items-center w-full h-screen">
