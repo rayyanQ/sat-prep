@@ -13,7 +13,39 @@ import Underline from '@tiptap/extension-underline';
 import Mathematics from '@tiptap-pro/extension-mathematics'
 
 import 'katex/dist/katex.min.css'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
+/**
+ * 
+ * "@tiptap/pm": "^2.4.0",
+ * "@tiptap/react": "^2.4.0",
+ * "@tiptap/starter-kit - bold
+ *  .configure({
+        heading: false,
+        codeBlock: false,
+        underline: false,
+        italic: false,
+        strike: false,
+        listItem: false,
+        orderedList: false,
+        bulletList: false,
+        blockquote: false,
+        hardBreak: false,
+        horizontalRule: false,
+        gapcursor: false,
+      }),
+ * "@tiptap-pro/extension-mathematics": "^2.10.7",
+ * "@tiptap/extension-underline": "^2.6.4",
+ * 
+ */
 const Tiptap = () => {
 
   /**
@@ -36,7 +68,9 @@ const Tiptap = () => {
   return (
     <div className="w-full h-full flex flex-col items-center justify-start">
       <MenuBar editor={editor} />
-      <EditorContent editor={editor} className="w-full h-full border p-1 first:h-full first:border-none m-0" />
+      <ScrollArea className="w-full h-full border rounded p-1">
+        <EditorContent editor={editor} className="w-full h-fit m-0" />
+      </ScrollArea>
     </div>
   )
 }
@@ -47,7 +81,7 @@ const MenuBar = ({ editor }: {editor: Editor|null}) => {
   }
 
   return (
-    <div className="flex flex-row w-full border rounded p-1 mb-1">
+    <div className="flex flex-row justify-between w-full border rounded p-1 mb-1">
       <ToggleGroup type="multiple">
         <ToggleGroupItem value="bold" aria-label="Toggle bold" data-state={editor.isActive('bold') ? 'on' : 'off'} onClick={() => editor.chain().focus().toggleBold().run()}>
           <Bold className="h-4 w-4" />
@@ -59,6 +93,22 @@ const MenuBar = ({ editor }: {editor: Editor|null}) => {
           <UnderlineIcon className="h-4 w-4" />
         </ToggleGroupItem>
       </ToggleGroup>
+
+      <Select>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Text Style" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Text Style</SelectLabel>
+            <SelectItem value="h1">Heading 1</SelectItem>
+            <SelectItem value="h2">Heading 2</SelectItem>
+            <SelectItem value="h3">Heading 3</SelectItem>
+            <SelectItem value="p">Paragraph</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+
     </div>
   )
 }
