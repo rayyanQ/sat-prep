@@ -43,26 +43,25 @@ export default async function NewQuestion({ params }: { params: { qid: string } 
           <ResizableHandle className="border-2" />
 
           <ResizablePanel defaultSize={50}>
-            <div className="min-w-48 w-full h-full max-w-[700px] flex flex-col justify-start items-center mx-auto px-10 py-6">
+            <div className="min-w-48 w-full h-full max-w-[700px] grid grid-rows-2 justify-start items-center mx-auto px-10 py-6">
 
-              <div className="w-full h-1/2 flex flex-col justify-center items-start">
+              <div className="row-span-1 w-full h-full flex flex-grow flex-col justify-center items-start">
                 <H4>Question</H4>
                 <Tiptap />
               </div>
               <br />
              
-              <div className="w-full h-1/2 flex flex-col justify-start items-start">
-                <H4>Answer</H4>
+              <div className="row-span-1 w-full h-full flex flex-col justify-start items-start">
                 <Tabs defaultValue="mcq" className="w-full">
-                  <TabsList className="mb-1">
-                    <TabsTrigger value="mcq">Multiple Choice Question</TabsTrigger>
-                    <TabsTrigger value="spr">Student Produced Response</TabsTrigger>
-                  </TabsList>
+                  <div className="flex flex-row justify-between items-center space-x-2">
+                    <H4>Answer</H4>
+                    <TabsList className="mb-1">
+                      <TabsTrigger value="mcq">MCQ</TabsTrigger>
+                      <TabsTrigger value="spr">Custom Response</TabsTrigger>
+                    </TabsList>
+                  </div>
                   <TabsContent value="mcq">
                     <ol className="w-full space-y-3">
-                      <li className="w-full h-12 flex flex-row justify-end items-center">
-                        Correct
-                      </li>
                       <li className="w-full h-12 flex flex-row justify-start items-center">
                         <div>
                           <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
