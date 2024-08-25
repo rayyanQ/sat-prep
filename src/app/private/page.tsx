@@ -10,5 +10,14 @@ export default async function PrivatePage() {
     redirect('/login')
   }
 
-  return <p>Hello {data.user.email}</p>
+  return (
+    <div>
+      <p>Hello {data.user.email}</p>
+      <ol className="list-decimal list-outside ml-5">
+        <li className='list-item'>Question 1</li>
+        <li>Question 2</li>
+        <li>Question 3</li>
+      </ol>
+    </div>
+  );
 }
