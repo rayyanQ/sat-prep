@@ -59,3 +59,41 @@
       @apply bg-background text-foreground;
     }
   }
+
+  .tiptap {
+    h1.text-style {
+      @apply text-4xl font-light;
+    }
+    h2.text-style {
+      @apply text-2xl;
+    }
+    h3.text-style {
+      @apply text-xl;
+    }
+    /*p.text-style {
+      @apply text-lg font-medium mb-1;
+    }*/
+
+    .Tiptap-mathematics-editor {
+      background: #202020;
+      color: #fff;
+      font-family: monospace;
+      padding: 0.2rem 0.5rem;
+    }
+  
+    .Tiptap-mathematics-render {
+      padding: 0 0.25rem;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover {
+        background: #eee;
+      }
+    }
+  
+    .Tiptap-mathematics-editor,
+    .Tiptap-mathematics-render {
+      border-radius: 0.25rem;
+      display: inline-block;
+    }
+  }
