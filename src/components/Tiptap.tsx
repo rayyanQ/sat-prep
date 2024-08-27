@@ -27,8 +27,9 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
 import { useEditor, EditorContent, Editor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import Underline from '@tiptap/extension-underline';
+import Underline from '@tiptap/extension-underline'
 import Mathematics from '@tiptap-pro/extension-mathematics'
+import Image from "@tiptap/extension-image"
 
 import { useState, useEffect } from 'react'
 
@@ -58,6 +59,7 @@ const Tiptap = () => {
       }),
       Mathematics,
       Underline,
+      Image
     ],
     content: '<p>Hello World! 🌎️</p>',
     autofocus: 'all',
@@ -165,11 +167,16 @@ const MenuBar = ({ editor }: {editor: Editor|null}) => {
       </ToggleGroup>
 
       <div className="flex items-center justify-center gap-1">
-        <Button variant="outline" size="icon" aria-label="Undo"
+        <Button variant="outline" size="icon" aria-label="Math"
           onClick={() => editor.chain().focus().insertContent('$f(x)$').run()}>
           <SquareFunctionIcon className="h-4 w-4" />
         </Button>
-        <Button variant="outline" size="icon" aria-label="Redo" onClick={() => editor.chain().focus().redo().run()}>
+        <Button variant="outline" size="icon" aria-label="Image"
+          onClick={() => editor.commands.setImage({
+            src: 'https://fastly.picsum.photos/id/171/200/200.jpg?hmac=Iac8JDq1zmWNTEFRE3gkPZthKsJwpOS76FjbzDkGSc8',
+            alt: 'A boring example image',
+            title: 'An example',
+          })}>
           <ImageIcon className="h-4 w-4" />
         </Button>
         <Button variant="outline" size="icon" aria-label="Redo" onClick={() => editor.chain().focus().redo().run()}>
