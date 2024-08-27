@@ -1,5 +1,14 @@
 'use client'
 
+/**
+ * TODO:
+ * - insert image -> upload to server, get url, insert image with url
+ * - use next image component for images in tiptap
+ * - insert table
+ * - table options: add row, add column, delete row, delete column, etc
+ */
+
+// Import icons
 import {
   Bold,
   Italic,
@@ -13,28 +22,38 @@ import {
   RedoIcon,
 } from "lucide-react"
 
+// Import UI components
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+
+// Import Tiptap extensions
 import { useEditor, EditorContent, Editor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
 import Mathematics from '@tiptap-pro/extension-mathematics'
 import Image from "@tiptap/extension-image"
+import Placeholder from '@tiptap/extension-placeholder'
+import Dropcursor from '@tiptap/extension-dropcursor'
 
-import { useState, useEffect } from 'react'
-
+import { useState } from 'react'
 import 'katex/dist/katex.min.css'
 
+// Tiptap editor with the menu bar
 const Tiptap = () => {
 
   const editor = useEditor({
@@ -59,9 +78,12 @@ const Tiptap = () => {
       }),
       Mathematics,
       Underline,
-      Image
+      Image,
+      Dropcursor,
+      Placeholder.configure({
+        placeholder: 'Provide context for the question here...',
+      }),
     ],
-    content: '<p>Hello World! 🌎️</p>',
     autofocus: 'all',
     editorProps: {
       attributes: {
@@ -80,31 +102,25 @@ const Tiptap = () => {
   )
 }
 
+// Menu bar for the Tiptap editor
 const MenuBar = ({ editor }: {editor: Editor|null}) => {
-  const [value, setValue] = useState("");
-  useEffect(() => {
-    if (editor) {
-      if (editor.isActive('heading', { level: 1 })) {
-        setValue("H1")
-      } else if (editor.isActive('heading', { level: 2 })) {
-        setValue("H2")
-      } else if (editor.isActive('heading', { level: 3 })) {
-        setValue("H3")
-      } else if (editor.isActive('paragraph')) {
-        setValue("P")
-      }
-    }
-  }, [
-    editor,
-    editor?.isActive('heading', {level: 1}),
-    editor?.isActive('heading', {level: 2}),
-    editor?.isActive('heading', {level: 3}),
-    editor?.isActive('paragraph')
-  ])
+  const [value, setValue] = useState("P"); // TODO: rename variables
 
   if (!editor) {
     return null
   }
+
+  editor.on('selectionUpdate', ({editor}) => {
+    if (editor.isActive('heading', { level: 1 })) {
+      setValue("H1")
+    } else if (editor.isActive('heading', { level: 2 })) {
+      setValue("H2")
+    } else if (editor.isActive('heading', { level: 3 })) {
+      setValue("H3")
+    } else if (editor.isActive('paragraph')) {
+      setValue("P")
+    }
+  });
 
   const setTextStyle = (value: string) => {
     switch (value) {
@@ -121,6 +137,7 @@ const MenuBar = ({ editor }: {editor: Editor|null}) => {
         editor.chain().focus().setParagraph().run()
         break
       default:
+        editor.chain().focus().run()
         break
     }
     setValue(value)
@@ -171,15 +188,18 @@ const MenuBar = ({ editor }: {editor: Editor|null}) => {
           onClick={() => editor.chain().focus().insertContent('$f(x)$').run()}>
           <SquareFunctionIcon className="h-4 w-4" />
         </Button>
-        <Button variant="outline" size="icon" aria-label="Image"
-          onClick={() => editor.commands.setImage({
-            src: 'https://fastly.picsum.photos/id/171/200/200.jpg?hmac=Iac8JDq1zmWNTEFRE3gkPZthKsJwpOS76FjbzDkGSc8',
-            alt: 'A boring example image',
-            title: 'An example',
-          })}>
-          <ImageIcon className="h-4 w-4" />
-        </Button>
-        <Button variant="outline" size="icon" aria-label="Redo" onClick={() => editor.chain().focus().redo().run()}>
+        <Popover>
+          <PopoverTrigger>
+            <Button variant="outline" size="icon" aria-label="Image">
+              <ImageIcon className="h-4 w-4" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="flex flex-col gap-2">
+            <Input type="file" />
+            <Button>Upload</Button>
+          </PopoverContent>
+        </Popover>
+        <Button variant="outline" size="icon" aria-label="Table" onClick={() => editor.chain().focus().redo().run()}>
           <TableIcon className="h-4 w-4" />
         </Button>
       </div>

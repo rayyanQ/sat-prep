@@ -93,7 +93,29 @@
   
     .Tiptap-mathematics-editor,
     .Tiptap-mathematics-render {
-      border-radius: 0.25rem;
-      display: inline-block;
+      @apply rounded;
+      @apply inline-block;
+    }
+
+    /* Placeholder */
+    p.is-editor-empty:first-child::before {
+      @apply text-muted-foreground;
+      content: attr(data-placeholder);
+      float: left;
+      height: 0;
+      pointer-events: none;
+    }
+
+    img {
+      display: block;
+      height: auto;
+      @apply m-1;
+      max-width: 100%;
+  
+      &.ProseMirror-selectednode {
+        @apply outline;
+        @apply outline-2;
+        @apply outline-primary;
+      }
     }
   }
