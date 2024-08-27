@@ -6,6 +6,9 @@ import {
   UnderlineIcon,
   ListIcon,
   ListOrderedIcon,
+  SquareFunctionIcon,
+  ImageIcon,
+  TableIcon,
   UndoIcon,
   RedoIcon,
 } from "lucide-react"
@@ -27,7 +30,7 @@ import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline';
 import Mathematics from '@tiptap-pro/extension-mathematics'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import 'katex/dist/katex.min.css'
 
@@ -46,6 +49,12 @@ const Tiptap = () => {
             class: 'list-decimal pl-6',
           },
         },
+        heading: {
+          levels: [1, 2, 3],
+          HTMLAttributes: {
+            class: 'text-style',
+          },
+        },
       }),
       Mathematics,
       Underline,
@@ -62,7 +71,7 @@ const Tiptap = () => {
   return (
     <div className="w-full h-full flex flex-col items-center justify-start">
       <MenuBar editor={editor} />
-      <ScrollArea className="w-full h-full border rounded p-1">
+      <ScrollArea className="w-full h-full border rounded p-1" onClick={() => editor?.chain().focus().run()}>
         <EditorContent editor={editor} />
       </ScrollArea>
     </div>
@@ -71,6 +80,25 @@ const Tiptap = () => {
 
 const MenuBar = ({ editor }: {editor: Editor|null}) => {
   const [value, setValue] = useState("");
+  useEffect(() => {
+    if (editor) {
+      if (editor.isActive('heading', { level: 1 })) {
+        setValue("H1")
+      } else if (editor.isActive('heading', { level: 2 })) {
+        setValue("H2")
+      } else if (editor.isActive('heading', { level: 3 })) {
+        setValue("H3")
+      } else if (editor.isActive('paragraph')) {
+        setValue("P")
+      }
+    }
+  }, [
+    editor,
+    editor?.isActive('heading', {level: 1}),
+    editor?.isActive('heading', {level: 2}),
+    editor?.isActive('heading', {level: 3}),
+    editor?.isActive('paragraph')
+  ])
 
   if (!editor) {
     return null
@@ -78,16 +106,16 @@ const MenuBar = ({ editor }: {editor: Editor|null}) => {
 
   const setTextStyle = (value: string) => {
     switch (value) {
-      case "Heading 1":
+      case "H1":
         editor.chain().focus().setHeading({ level: 1 }).run()
         break
-      case "Heading 2":
+      case "H2":
         editor.chain().focus().setHeading({ level: 2 }).run()
         break
-      case "Heading 3":
+      case "H3":
         editor.chain().focus().setHeading({ level: 3 }).run()
         break
-      case "Paragraph":
+      case "P":
         editor.chain().focus().setParagraph().run()
         break
       default:
@@ -97,21 +125,20 @@ const MenuBar = ({ editor }: {editor: Editor|null}) => {
   }
   
   return (
-    <div className="flex flex-row justify-start w-full border rounded gap-2 p-1 mb-1">
+    <div className="flex flex-row justify-between w-full border rounded p-1 mb-1">
 
       <Select value={value} onValueChange={setTextStyle}>
-        <SelectTrigger className="w-[150px]">
+        <SelectTrigger className="w-[100px]">
           <SelectValue placeholder="Text Style">
             {value ? value : "Text Style"}
           </SelectValue>
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>Text Style</SelectLabel>
-            <SelectItem value="Heading 1">Heading 1</SelectItem>
-            <SelectItem value="Heading 2">Heading 2</SelectItem>
-            <SelectItem value="Heading 3">Heading 3</SelectItem>
-            <SelectItem value="Paragraph">Paragraph</SelectItem>
+            <SelectItem value="H1">H1</SelectItem>
+            <SelectItem value="H2">H2</SelectItem>
+            <SelectItem value="H3">H3</SelectItem>
+            <SelectItem value="P">P</SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>
@@ -136,6 +163,19 @@ const MenuBar = ({ editor }: {editor: Editor|null}) => {
           <ListOrderedIcon className="h-4 w-4" />
         </ToggleGroupItem>
       </ToggleGroup>
+
+      <div className="flex items-center justify-center gap-1">
+        <Button variant="outline" size="icon" aria-label="Undo"
+          onClick={() => editor.chain().focus().insertContent('$f(x)$').run()}>
+          <SquareFunctionIcon className="h-4 w-4" />
+        </Button>
+        <Button variant="outline" size="icon" aria-label="Redo" onClick={() => editor.chain().focus().redo().run()}>
+          <ImageIcon className="h-4 w-4" />
+        </Button>
+        <Button variant="outline" size="icon" aria-label="Redo" onClick={() => editor.chain().focus().redo().run()}>
+          <TableIcon className="h-4 w-4" />
+        </Button>
+      </div>
 
       <div className="flex items-center justify-center gap-1">
         <Button variant="outline" size="icon" aria-label="Undo" onClick={() => editor.chain().focus().undo().run()}>
