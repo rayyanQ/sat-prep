@@ -49,12 +49,16 @@ import Mathematics from '@tiptap-pro/extension-mathematics'
 import Image from "@tiptap/extension-image"
 import Placeholder from '@tiptap/extension-placeholder'
 import Dropcursor from '@tiptap/extension-dropcursor'
+import Table from '@tiptap/extension-table'
+import TableRow from '@tiptap/extension-table-row'
+import TableHeader from '@tiptap/extension-table-header'
+import TableCell from '@tiptap/extension-table-cell'
 
 import { useState } from 'react'
 import 'katex/dist/katex.min.css'
 
 // Tiptap editor with the menu bar
-const Tiptap = () => {
+const Tiptap = ({ placeholder="Start typing here..." }: { placeholder: string }) => {
 
   const editor = useEditor({
     extensions: [
@@ -81,8 +85,14 @@ const Tiptap = () => {
       Image,
       Dropcursor,
       Placeholder.configure({
-        placeholder: 'Provide context for the question here...',
+        placeholder: placeholder,
       }),
+      Table.configure({
+        resizable: true,
+      }),
+      TableRow,
+      TableHeader,
+      TableCell,
     ],
     autofocus: 'all',
     editorProps: {
@@ -110,6 +120,7 @@ const MenuBar = ({ editor }: {editor: Editor|null}) => {
     return null
   }
 
+  // Use useEffect
   editor.on('selectionUpdate', ({editor}) => {
     if (editor.isActive('heading', { level: 1 })) {
       setValue("H1")
@@ -199,7 +210,7 @@ const MenuBar = ({ editor }: {editor: Editor|null}) => {
             <Button>Upload</Button>
           </PopoverContent>
         </Popover>
-        <Button variant="outline" size="icon" aria-label="Table" onClick={() => editor.chain().focus().redo().run()}>
+        <Button variant="outline" size="icon" aria-label="Table" onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()}>
           <TableIcon className="h-4 w-4" />
         </Button>
       </div>
