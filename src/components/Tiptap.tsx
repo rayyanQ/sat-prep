@@ -102,6 +102,8 @@ const Tiptap = ({ placeholder="Start typing here..." }: { placeholder: string })
     },
   })
 
+
+
   return (
     <div className="w-full h-full flex flex-col items-center justify-start">
       <MenuBar editor={editor} />
@@ -113,7 +115,7 @@ const Tiptap = ({ placeholder="Start typing here..." }: { placeholder: string })
 }
 
 // Menu bar for the Tiptap editor
-const MenuBar = ({ editor }: {editor: Editor|null}) => {
+const MenuBar = ({ editor }: { editor: Editor | null }) => {
   const [value, setValue] = useState("P"); // TODO: rename variables
 
   if (!editor) {

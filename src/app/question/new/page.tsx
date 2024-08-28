@@ -24,6 +24,14 @@ export default async function NewQuestion({ params }: { params: { qid: string } 
     redirect('/login')
   }*/
 
+  /**
+   * On submit,
+   * retrieve the context
+   * retrieve the question
+   * retrieve the answer
+   */
+
+
   return(
     <main className="flex flex-col justify-between items-center w-full h-screen">
       <Header />
