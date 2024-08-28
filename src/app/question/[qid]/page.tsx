@@ -28,7 +28,7 @@ import {
   TriangleAlert
 } from "lucide-react";
 // TODO: add types for he
-import he from 'he';
+// import he from 'he';
 
 export default async function Question({ params }: { params: { qid: string } }) {
 
@@ -66,7 +66,8 @@ export default async function Question({ params }: { params: { qid: string } }) 
           <ResizablePanel defaultSize={50}>
             <div className="min-w-48 w-full max-w-[700px] flex flex-col justify-start items-center mx-auto px-10 py-6">
               <p className="w-full flex justify-start items-center my-6 font-serif">
-                {he.decode(question[0]?.context)}
+                {/*he.decode(question[0]?.context)*/}
+                {question[0]?.context}
               </p>
             </div>
           </ResizablePanel>
