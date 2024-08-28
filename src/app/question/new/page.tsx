@@ -35,7 +35,7 @@ export default async function NewQuestion({ params }: { params: { qid: string } 
             <div className="min-w-48 w-full h-full max-w-[700px] flex flex-col justify-start items-center mx-auto px-10 py-6">
               <div className="w-full h-full flex flex-col justify-center items-start">
                 <H4>Context</H4>
-                <Tiptap />
+                <Tiptap placeholder="Provide context for the question here..." />
               </div>
             </div>
           </ResizablePanel>
@@ -47,7 +47,7 @@ export default async function NewQuestion({ params }: { params: { qid: string } 
 
               <div className="w-full h-full flex flex-grow flex-col justify-center items-start">
                 <H4>Question</H4>
-                <Tiptap />
+                <Tiptap placeholder="Enter the question here..." />
               </div>
               <br />
              
