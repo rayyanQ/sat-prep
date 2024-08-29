@@ -54,11 +54,11 @@ import TableRow from '@tiptap/extension-table-row'
 import TableHeader from '@tiptap/extension-table-header'
 import TableCell from '@tiptap/extension-table-cell'
 
-import { useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import 'katex/dist/katex.min.css'
 
 // Tiptap editor with the menu bar
-const Tiptap = ({ placeholder="Start typing here..." }: { placeholder: string }) => {
+const Tiptap = ({ submitted, handleSubmit, placeholder="Start typing here..." }: { submitted: boolean, handleSubmit: (data: object) => void, placeholder: string }) => {
 
   const editor = useEditor({
     extensions: [
@@ -102,6 +102,11 @@ const Tiptap = ({ placeholder="Start typing here..." }: { placeholder: string })
     },
   })
 
+  useEffect(() => {
+    if (submitted && editor) {
+      handleSubmit(editor.getJSON())
+    }
+  }, [submitted])
 
 
   return (

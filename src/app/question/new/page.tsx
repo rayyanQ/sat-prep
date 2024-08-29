@@ -1,5 +1,6 @@
-import { redirect } from 'next/navigation'
-import { createClient } from '@/lib/supabase/server'
+"use client"
+
+//import { createClient } from '@/lib/supabase/client'
 
 import Tiptap from '@/components/Tiptap'
 import { Button } from "@/components/ui/button";
@@ -11,12 +12,12 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { H4 } from '@/components/ui/heading';
 import { Input } from '@/components/ui/input';
-import Header from "@/components/Header";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 
+import { useEffect, useState } from 'react';
 
-export default async function NewQuestion({ params }: { params: { qid: string } }) {
+export default function NewQuestion({ params }: { params: { qid: string } }) {
   /*const supabase = createClient()
 
   const { data: userData, error: userError } = await supabase.auth.getUser()
@@ -31,10 +32,34 @@ export default async function NewQuestion({ params }: { params: { qid: string } 
    * retrieve the answer
    */
 
+  const [context, setContext] = useState<string>('');
+  const [question, setQuestion] = useState<string>('');
+  const [answers, setAnswers] = useState<string>('');
+  const [submitted, setSubmitted] = useState<boolean>(false);
+
+  const handleContextSubmit = (data: object) => {
+    setContext(JSON.stringify(data));
+  }
+  const handleQuestionSubmit = (data: object) => {
+    setQuestion(JSON.stringify(data));
+  }
+  const handleAnswersSubmit = (data: object) => {
+    setAnswers(JSON.stringify(data));
+  }
+  const handleSubmit = () => {
+    setSubmitted(true);
+  }
+
+  useEffect(() => {
+    // submit data to the server - using server actions?
+    console.log(context);
+    console.log(question);
+    setSubmitted(false);
+  }, [context, question, answers]);
 
   return(
     <main className="flex flex-col justify-between items-center w-full h-screen">
-      <Header />
+      
 
       <div className="h-full w-full flex flex-col justify-center items-center">
         <ResizablePanelGroup direction="horizontal" className="h-full container">
@@ -43,7 +68,7 @@ export default async function NewQuestion({ params }: { params: { qid: string } 
             <div className="min-w-48 w-full h-full max-w-[700px] flex flex-col justify-start items-center mx-auto px-10 py-6">
               <div className="w-full h-full flex flex-col justify-center items-start">
                 <H4>Context</H4>
-                <Tiptap placeholder="Provide context for the question here..." />
+                <Tiptap submitted={submitted} handleSubmit={handleContextSubmit} placeholder="Provide context for the question here..." />
               </div>
             </div>
           </ResizablePanel>
@@ -55,7 +80,7 @@ export default async function NewQuestion({ params }: { params: { qid: string } 
 
               <div className="w-full h-full flex flex-grow flex-col justify-center items-start">
                 <H4>Question</H4>
-                <Tiptap placeholder="Enter the question here..." />
+                <Tiptap submitted={submitted} handleSubmit={handleQuestionSubmit}  placeholder="Enter the question here..." />
               </div>
               <br />
              
@@ -123,13 +148,13 @@ export default async function NewQuestion({ params }: { params: { qid: string } 
         </ResizablePanelGroup>
       </div>
       
-      <NewQuestionFooter />
+      <NewQuestionFooter handleSubmit={handleSubmit} />
     </main>
   );
 }
 
 
-const NewQuestionFooter = () => {
+const NewQuestionFooter = ({handleSubmit}: {handleSubmit: () => void}) => {
   return (
     <footer className="bottom-0 flex flex-row justify-center items-center w-full border-t">
       <div className="container h-14 px-10 grid grid-cols-2">
@@ -138,7 +163,7 @@ const NewQuestionFooter = () => {
         </div>
         <div className="col-span-1 flex flex-row justify-end items-center space-x-4">
           <Button variant="outline">Preview</Button>
-          <Button>Submit</Button>
+          <Button onClick={() => handleSubmit()}>Submit</Button>
         </div>
       </div>
     </footer>
