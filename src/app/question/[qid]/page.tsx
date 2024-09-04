@@ -39,6 +39,7 @@ export default async function Question({ params }: { params: { qid: string } }) 
     redirect('/login')
   }
   
+  // https://tiptap.dev/docs/guides/output-json-html#render
   let { data: question, error } = await supabase
     .from('questions')
     .select("*")
@@ -53,8 +54,6 @@ export default async function Question({ params }: { params: { qid: string } }) 
 
   return (
     <main className="flex flex-col justify-between items-center w-full h-screen">
-      <Header />
-
       <div className="h-full w-full flex flex-col justify-center items-center">
         {
         /*

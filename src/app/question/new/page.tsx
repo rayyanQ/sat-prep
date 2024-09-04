@@ -14,6 +14,7 @@ import { H4 } from '@/components/ui/heading';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
+import Header from '@/components/Header';
 
 import { useEffect, useState } from 'react';
 
@@ -24,13 +25,6 @@ export default function NewQuestion({ params }: { params: { qid: string } }) {
   if (userError || !userData?.user) {
     redirect('/login')
   }*/
-
-  /**
-   * On submit,
-   * retrieve the context
-   * retrieve the question
-   * retrieve the answer
-   */
 
   const [context, setContext] = useState<string>('');
   const [question, setQuestion] = useState<string>('');
@@ -59,7 +53,6 @@ export default function NewQuestion({ params }: { params: { qid: string } }) {
 
   return(
     <main className="flex flex-col justify-between items-center w-full h-screen">
-      
 
       <div className="h-full w-full flex flex-col justify-center items-center">
         <ResizablePanelGroup direction="horizontal" className="h-full container">

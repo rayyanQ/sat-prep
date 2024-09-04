@@ -1,14 +1,8 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import Header from "@/components/Header"
-import TestCard from "@/components/TestCard"
 import { Question, columns } from "@/components/QuestionTable/columns"
 import { DataTable } from "@/components/QuestionTable/data-table"
 import { H2 } from "@/components/ui/heading"
-import TestIcon from "../../public/test-icon.svg"
-import Image from "next/image"
 
 
- 
 const questions: Question[] = [
   {
     uid: "al56d",
@@ -75,12 +69,9 @@ const questions: Question[] = [
 // Main Home page component
 const Home = () => {
   return (
-    <>
-      <Header />
-      <main className="w-full flex flex-col justify-center items-start">
-        <QuestionSection />
-      </main>
-    </>
+    <main className="w-full flex flex-col justify-center items-start">
+      <QuestionSection />
+    </main>
   );
 }
 
