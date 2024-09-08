@@ -42,6 +42,13 @@ export default function NewQuestion({ params }: { params: { qid: string } }) {
   }
   const handleSubmit = () => {
     setSubmitted(true);
+    // Collect answer type
+    //  if mcq, then collect options and correct answer
+    //  if spr, then collect correct answer and allowed error
+    // Validate input
+    // Submit data to the server
+    // Error handling
+    // On success, redirect to the admin dashboard page
   }
 
   useEffect(() => {
