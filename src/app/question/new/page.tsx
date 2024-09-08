@@ -59,97 +59,99 @@ export default function NewQuestion({ params }: { params: { qid: string } }) {
   }, [context, question, answers]);
 
   return(
-    <main className="flex flex-col justify-between items-center w-full h-screen">
+    <div className="flex flex-grow w-full">
+      <main className="flex flex-col justify-between items-center w-full">
 
-      <div className="h-full w-full flex flex-col justify-center items-center">
-        <ResizablePanelGroup direction="horizontal" className="h-full container">
+        <div className="h-full w-full flex flex-col justify-center items-center">
+          <ResizablePanelGroup direction="horizontal" className="h-full container">
 
-          <ResizablePanel defaultSize={50}>
-            <div className="min-w-48 w-full h-full max-w-[700px] flex flex-col justify-start items-center mx-auto px-10 py-6">
-              <div className="w-full h-full flex flex-col justify-center items-start">
-                <H4>Context</H4>
-                <Tiptap submitted={submitted} handleSubmit={handleContextSubmit} placeholder="Provide context for the question here..." />
+            <ResizablePanel defaultSize={50}>
+              <div className="min-w-48 w-full h-full max-w-[700px] flex flex-col justify-start items-center mx-auto px-10 py-6">
+                <div className="w-full h-full flex flex-col justify-center items-start">
+                  <H4>Context</H4>
+                  <Tiptap submitted={submitted} handleSubmit={handleContextSubmit} placeholder="Provide context for the question here..." />
+                </div>
               </div>
-            </div>
-          </ResizablePanel>
+            </ResizablePanel>
 
-          <ResizableHandle className="border-2" />
+            <ResizableHandle className="border-2" />
 
-          <ResizablePanel defaultSize={50}>
-            <div className="min-w-48 w-full h-full max-w-[700px] flex flex-col justify-start items-center mx-auto px-10 py-6">
+            <ResizablePanel defaultSize={50}>
+              <div className="min-w-48 w-full h-full max-w-[700px] flex flex-col justify-start items-center mx-auto px-10 py-6">
 
-              <div className="w-full h-full flex flex-grow flex-col justify-center items-start">
-                <H4>Question</H4>
-                <Tiptap submitted={submitted} handleSubmit={handleQuestionSubmit}  placeholder="Enter the question here..." />
-              </div>
-              <br />
-             
-              <div className="row-span-1 w-full h-full flex flex-col justify-start items-start">
-                <Tabs defaultValue="mcq" className="w-full">
-                  <div className="flex flex-row justify-between items-center space-x-2">
-                    <H4>Answer</H4>
-                    <TabsList className="mb-1">
-                      <TabsTrigger value="mcq">MCQ</TabsTrigger>
-                      <TabsTrigger value="spr">Custom Response</TabsTrigger>
-                    </TabsList>
-                  </div>
-                  <TabsContent value="mcq">
-                    <ol className="w-full space-y-3">
-                      <li className="w-full h-12 flex flex-row justify-start items-center">
-                        <div>
-                          <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
-                            A
-                          </span>
-                        </div>
-                        <Input type="text" placeholder="Option A" className="w-full rounded border border-neutral-950" />
-                        <Checkbox className="mx-6" />
-                      </li>
-                      <li className="w-full h-12 flex flex-row justify-start items-center">
-                        <div>
-                          <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
-                            B
-                          </span>
-                        </div>
-                        <Input type="text" placeholder="Option B" className="w-full rounded border border-neutral-950" />
-                        <Checkbox className="mx-6" />
-                      </li>
-                      <li className="w-full h-12 flex flex-row justify-start items-center">
-                        <div>
-                          <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
-                            C
-                          </span>
-                        </div>
-                        <Input type="text" placeholder="Option C" className="w-full rounded border border-neutral-950" />
-                        <Checkbox className="mx-6" />
-                      </li>
-                      <li className="w-full h-12 flex flex-row justify-start items-center">
-                        <div>
-                          <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
-                            D
-                          </span>
-                        </div>
-                        <Input type="text" placeholder="Option D" className="w-full rounded border border-neutral-950" />
-                        <Checkbox className="mx-6" />
-                      </li>
-                    </ol>
-                  </TabsContent>
-                  <TabsContent value="spr">
-                    <div className="flex flex-row justify-start items-center space-x-2">
-                      <Input type="text" placeholder="Correct answer" className="rounded border border-neutral-950" />
-                      <p>+/-</p>
-                      <Input type="text" placeholder="Allowed error" className="rounded border border-neutral-950" />
+                <div className="w-full h-full flex flex-grow flex-col justify-center items-start">
+                  <H4>Question</H4>
+                  <Tiptap submitted={submitted} handleSubmit={handleQuestionSubmit}  placeholder="Enter the question here..." />
+                </div>
+                <br />
+              
+                <div className="row-span-1 w-full h-full flex flex-col justify-start items-start">
+                  <Tabs defaultValue="mcq" className="w-full">
+                    <div className="flex flex-row justify-between items-center space-x-2">
+                      <H4>Answer</H4>
+                      <TabsList className="mb-1">
+                        <TabsTrigger value="mcq">MCQ</TabsTrigger>
+                        <TabsTrigger value="spr">Custom Response</TabsTrigger>
+                      </TabsList>
                     </div>
-                  </TabsContent>
-                </Tabs>
-              </div>
+                    <TabsContent value="mcq">
+                      <ol className="w-full space-y-3">
+                        <li className="w-full h-12 flex flex-row justify-start items-center">
+                          <div>
+                            <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
+                              A
+                            </span>
+                          </div>
+                          <Input type="text" placeholder="Option A" className="w-full rounded border border-neutral-950" />
+                          <Checkbox className="mx-6" />
+                        </li>
+                        <li className="w-full h-12 flex flex-row justify-start items-center">
+                          <div>
+                            <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
+                              B
+                            </span>
+                          </div>
+                          <Input type="text" placeholder="Option B" className="w-full rounded border border-neutral-950" />
+                          <Checkbox className="mx-6" />
+                        </li>
+                        <li className="w-full h-12 flex flex-row justify-start items-center">
+                          <div>
+                            <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
+                              C
+                            </span>
+                          </div>
+                          <Input type="text" placeholder="Option C" className="w-full rounded border border-neutral-950" />
+                          <Checkbox className="mx-6" />
+                        </li>
+                        <li className="w-full h-12 flex flex-row justify-start items-center">
+                          <div>
+                            <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
+                              D
+                            </span>
+                          </div>
+                          <Input type="text" placeholder="Option D" className="w-full rounded border border-neutral-950" />
+                          <Checkbox className="mx-6" />
+                        </li>
+                      </ol>
+                    </TabsContent>
+                    <TabsContent value="spr">
+                      <div className="flex flex-row justify-start items-center space-x-2">
+                        <Input type="text" placeholder="Correct answer" className="rounded border border-neutral-950" />
+                        <p>+/-</p>
+                        <Input type="text" placeholder="Allowed error" className="rounded border border-neutral-950" />
+                      </div>
+                    </TabsContent>
+                  </Tabs>
+                </div>
 
-            </div>
-          </ResizablePanel>
-        </ResizablePanelGroup>
-      </div>
-      
-      <NewQuestionFooter handleSubmit={handleSubmit} />
-    </main>
+              </div>
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        </div>
+        
+        <NewQuestionFooter handleSubmit={handleSubmit} />
+      </main>
+    </div>
   );
 }
 

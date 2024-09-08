@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { H2 } from "@/components/ui/heading"
 
-export default function LoginPage() {
+export default function SignupPage() {
   return (
-    <div className="w-full h-screen flex flex-col">
-      <main className="w-full h-full flex flex-col justify-center items-center">
+    <div className="flex flex-grow w-full">
+      <main className="w-full flex flex-col justify-center items-center">
         <Card className="p-6">
           <CardHeader className="w-full text-center">
             <H2>Sign up</H2>
