@@ -30,8 +30,8 @@ type OptionsType = {
 }
 
 export default function NewQuestion({ params }: { params: { qid: string } }) {
-  /*const supabase = createClient()
 
+  /*const supabase = createClient()
   const { data: userData, error: userError } = await supabase.auth.getUser()
   if (userError || !userData?.user) {
     redirect('/login')
@@ -53,19 +53,17 @@ export default function NewQuestion({ params }: { params: { qid: string } }) {
   }
   const handleSubmit = () => {
     setSubmitted(true);
-    
-    // Collect answer type - answerType
-    //  if mcq, then collect options and correct answer
-    //  if spr, then collect correct answer and allowed error
-    // Validate input
-    // Submit data to the server
-    // Error handling
-    // On success, redirect to the admin dashboard page
-
   }
 
   useEffect(() => {
     if (submitted) {
+      // Collect answer type - answerType
+      //  if mcq, then collect options and correct answer
+      //  if spr, then collect correct answer and allowed error
+      // Validate input
+      // Submit data to the server
+      // Error handling
+      // On success, redirect to the admin dashboard page
       console.log(context);
       console.log(question);
       console.log(answers);
