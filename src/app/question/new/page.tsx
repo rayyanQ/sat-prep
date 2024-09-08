@@ -28,6 +28,7 @@ export default function NewQuestion({ params }: { params: { qid: string } }) {
 
   const [context, setContext] = useState<string>('');
   const [question, setQuestion] = useState<string>('');
+  const [answerType, setAnswerType] = useState<string>('mcq');
   const [answers, setAnswers] = useState<string>('');
   const [submitted, setSubmitted] = useState<boolean>(false);
 
@@ -42,21 +43,23 @@ export default function NewQuestion({ params }: { params: { qid: string } }) {
   }
   const handleSubmit = () => {
     setSubmitted(true);
-    // Collect answer type
+    
+    // Collect answer type - answerType
     //  if mcq, then collect options and correct answer
     //  if spr, then collect correct answer and allowed error
     // Validate input
     // Submit data to the server
     // Error handling
     // On success, redirect to the admin dashboard page
+
   }
 
   useEffect(() => {
-    // submit data to the server - using server actions?
     console.log(context);
     console.log(question);
+    console.log(answerType);
     setSubmitted(false);
-  }, [context, question, answers]);
+  }, [context, question, answerType, answers]);
 
   return(
     <div className="flex flex-grow w-full">
@@ -85,8 +88,8 @@ export default function NewQuestion({ params }: { params: { qid: string } }) {
                 </div>
                 <br />
               
-                <div className="row-span-1 w-full h-full flex flex-col justify-start items-start">
-                  <Tabs defaultValue="mcq" className="w-full">
+                <div className="w-full h-full flex flex-col justify-start items-start">
+                  <Tabs defaultValue="mcq" className="w-full" onValueChange={(v) => setAnswerType(v)}>
                     <div className="flex flex-row justify-between items-center space-x-2">
                       <H4>Answer</H4>
                       <TabsList className="mb-1">
@@ -146,6 +149,7 @@ export default function NewQuestion({ params }: { params: { qid: string } }) {
 
               </div>
             </ResizablePanel>
+
           </ResizablePanelGroup>
         </div>
         
