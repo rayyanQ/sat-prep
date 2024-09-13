@@ -53,6 +53,7 @@ export default function NewQuestion({ params }: { params: { qid: string } }) {
   }
   const handleSubmit = () => {
     setSubmitted(true);
+    //async programming
   }
 
   useEffect(() => {

@@ -90,7 +90,7 @@ const CreateOptionsForm = (
                   A
                 </span>
               </div>
-              <Input name="A" type="text" placeholder="Option A" className="w-full rounded border border-neutral-950"
+              <Input name="A" type="text" placeholder="Option A" value={options['A']} className="w-full rounded border border-neutral-950"
                 onChange={(e) => handleOptionChange('A', e.target.value)}
               />
               <span className="mx-2">
@@ -103,7 +103,7 @@ const CreateOptionsForm = (
                   B
                 </span>
               </div>
-              <Input name="B" type="text" placeholder="Option B" className="w-full rounded border border-neutral-950"
+              <Input name="B" type="text" placeholder="Option B" value={options['B']} className="w-full rounded border border-neutral-950"
                 onChange={(e) => handleOptionChange('B', e.target.value)}
               />
               <span className="mx-2">
@@ -116,7 +116,7 @@ const CreateOptionsForm = (
                   C
                 </span>
               </div>
-              <Input name="C" type="text" placeholder="Option C" className="w-full rounded border border-neutral-950"
+              <Input name="C" type="text" placeholder="Option C" value={options['C']} className="w-full rounded border border-neutral-950"
                 onChange={(e) => handleOptionChange('C', e.target.value)}
               />
               <span className="mx-2">
@@ -129,7 +129,7 @@ const CreateOptionsForm = (
                   D
                 </span>
               </div>
-              <Input name="D" type="text" placeholder="Option D" className="w-full rounded border border-neutral-950"
+              <Input name="D" type="text" placeholder="Option D" value={options['D']} className="w-full rounded border border-neutral-950"
                 onChange={(e) => handleOptionChange('D', e.target.value)}
               />
               <span className="mx-2">
