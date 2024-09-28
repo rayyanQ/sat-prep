@@ -39,6 +39,7 @@ export default async function Question({ params }: { params: { qid: string } }) 
     redirect('/login')
   }
   
+  // https://tiptap.dev/docs/guides/output-json-html#render
   let { data: question, error } = await supabase
     .from('questions')
     .select("*")
@@ -52,76 +53,76 @@ export default async function Question({ params }: { params: { qid: string } }) 
 
 
   return (
-    <main className="flex flex-col justify-between items-center w-full h-screen">
-      <Header />
-
-      <div className="h-full w-full flex flex-col justify-center items-center">
-        {
-        /*
-          TODO:
-          - change width to w-full
-        */
-        }
-        <ResizablePanelGroup direction="horizontal" className="h-full container">
-          <ResizablePanel defaultSize={50}>
-            <div className="min-w-48 w-full max-w-[700px] flex flex-col justify-start items-center mx-auto px-10 py-6">
-              <p className="w-full flex justify-start items-center my-6 font-serif">
-                {/*he.decode(question[0]?.context)*/}
-                {question[0]?.context}
-              </p>
-            </div>
-          </ResizablePanel>
-          <ResizableHandle className="border-2" />
-          <ResizablePanel defaultSize={50}>
-            <div className="min-w-48 w-full max-w-[700px] flex flex-col justify-start items-center mx-auto px-10 py-6">
-             
-              <div className="w-full h-8 flex justify-between items-center bg-neutral-200 border-b-2 border-neutral-950 border-dashed">
-                <div className="flex flex-row">
-                  <span className="flex justify-center items-center bg-neutral-950 text-white h-full aspect-square">
-                    <b>1</b>
-                  </span>
-                  <Bookmark size={20} />
-                </div>
-                <div>ABC</div>
+    <div className="flex flex-grow w-full">
+      <main className="flex flex-col justify-between items-center w-full">
+        <div className="h-full w-full flex flex-col justify-center items-center">
+          {
+          /*
+            TODO:
+            - change width to w-full
+          */
+          }
+          <ResizablePanelGroup direction="horizontal" className="h-full container">
+            <ResizablePanel defaultSize={50}>
+              <div className="min-w-48 w-full max-w-[700px] flex flex-col justify-start items-center mx-auto px-10 py-6">
+                <p className="w-full flex justify-start items-center my-6 font-serif">
+                  {/*he.decode(question[0]?.context)*/}
+                  {question[0]?.context}
+                </p>
               </div>
+            </ResizablePanel>
+            <ResizableHandle className="border-2" />
+            <ResizablePanel defaultSize={50}>
+              <div className="min-w-48 w-full max-w-[700px] flex flex-col justify-start items-center mx-auto px-10 py-6">
+              
+                <div className="w-full h-8 flex justify-between items-center bg-neutral-200 border-b-2 border-neutral-950 border-dashed">
+                  <div className="flex flex-row">
+                    <span className="flex justify-center items-center bg-neutral-950 text-white h-full aspect-square">
+                      <b>1</b>
+                    </span>
+                    <Bookmark size={20} />
+                  </div>
+                  <div>ABC</div>
+                </div>
 
-              <p className="w-full flex justify-start items-center my-6 font-serif">
-                {question[0]?.question}
-              </p>
+                <p className="w-full flex justify-start items-center my-6 font-serif">
+                  {question[0]?.question}
+                </p>
 
-              <ol className="w-full space-y-3">
-                <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950">
-                  <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
-                    A
-                  </span>
-                  scholarly
-                </li>
-                <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950">
-                  <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
-                    B
-                  </span>
-                  melodic
-                </li>
-                <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950">
-                  <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
-                    C
-                  </span>
-                  jarring
-                </li>
-                <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950">
-                  <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
-                    D
-                  </span>
-                  personal
-                </li>
-              </ol>
-            </div>
-          </ResizablePanel>
-        </ResizablePanelGroup>
-      </div>
-      
-      <QuestionFooter />
-    </main>
+                <ol className="w-full space-y-3">
+                  <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950">
+                    <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
+                      A
+                    </span>
+                    scholarly
+                  </li>
+                  <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950">
+                    <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
+                      B
+                    </span>
+                    melodic
+                  </li>
+                  <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950">
+                    <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
+                      C
+                    </span>
+                    jarring
+                  </li>
+                  <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950">
+                    <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
+                      D
+                    </span>
+                    personal
+                  </li>
+                </ol>
+              </div>
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        </div>
+        
+        <QuestionFooter />
+      </main>
+    </div>
   );
 }
 

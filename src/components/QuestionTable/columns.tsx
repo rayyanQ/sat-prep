@@ -8,17 +8,17 @@ import { Button } from "@/components/ui/button"
 // You can use a Zod schema here if you want.
 export type Question = {
   uid: string
-  id: number
+  serial_number: number
   title: string
   section: "English" | "Math"
   domain: string
   topic: string
   difficulty: "Easy" | "Medium" | "Hard"
-  status: "Incomplete" | "Complete"
+  //status: "Incomplete" | "Complete"
 }
 
 export const columns: ColumnDef<Question>[] = [
-  {
+  /*{
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
@@ -30,9 +30,9 @@ export const columns: ColumnDef<Question>[] = [
         }
       </div>
     }
-  },
+  },*/
   {
-    accessorKey: "id",
+    accessorKey: "serial_number",
     header: ({ column }) => {
       return (
         <Button
@@ -69,10 +69,30 @@ export const columns: ColumnDef<Question>[] = [
   },
   {
     accessorKey: "topic",
-    header: "Topic",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Topic
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "difficulty",
-    header: "Difficulty",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Difficulty
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
 ]
