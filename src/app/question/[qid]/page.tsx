@@ -34,6 +34,11 @@ export default async function Question({ params }: { params: { qid: string } }) 
     redirect('/')
   }
 
+  // Get the total number of questions
+  const { count, error: countError } = await supabase
+    .from('questions')
+    .select('*', { count: 'exact', head: true })
+
   // Parse answer options
   const answerData = JSON.parse(question[0]?.answer_options);
 
@@ -99,22 +104,22 @@ export default async function Question({ params }: { params: { qid: string } }) 
           </ResizablePanelGroup>
         </div>
         
-        <QuestionFooter />
+        <QuestionFooter currentQuestion={question[0]?.serial_number} questionCount={count} />
       </main>
     </div>
   );
 }
 
 
-const QuestionFooter = () => {
+const QuestionFooter = ({currentQuestion, questionCount}: {currentQuestion: number, questionCount: number|null}) => {
   return (
     <footer className="bottom-0 flex flex-row justify-center items-center w-full border-t">
       <div className="container h-14 px-10 grid grid-cols-3">
         <div className="col-span-1 flex flex-row justify-start items-center">
-          <b>Rayyan Quraishi</b>
+          <p>Attempt #</p>
         </div>
         <div className="col-span-1 flex flex-row justify-center items-center">
-          <div className="bg-neutral-950 text-white px-3 py-1 rounded">Question 1 of 8</div>
+          <div className="bg-neutral-950 text-white px-3 py-1 rounded">Question {currentQuestion} of {questionCount}</div>
         </div>
         <div className="col-span-1 flex flex-row justify-end items-center space-x-4">
           <Button variant="outline">Previous</Button>
