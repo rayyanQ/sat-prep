@@ -8,54 +8,40 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import Header from "@/components/Header";
-import {
-  EllipsisVertical,
-  PencilLine,
   Bookmark,
-  CircleHelp,
-  Keyboard,
-  PersonStanding,
-  ScanLine,
-  DoorOpen,
-  TriangleAlert
 } from "lucide-react";
 import { generateHTML } from '@tiptap/html'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
 import Mathematics from '@tiptap-pro/extension-mathematics'
 import Image from "@tiptap/extension-image"
-// TODO: add types for he
-// import he from 'he';
+import 'katex/dist/katex.min.css'
+
 
 export default async function Question({ params }: { params: { qid: string } }) {
 
   const supabase = createClient()
 
+  // Check if the user is logged in
   const { data: userData, error: userError } = await supabase.auth.getUser()
   if (userError || !userData?.user) {
     redirect('/login')
   }
   
-  // https://tiptap.dev/docs/guides/output-json-html#render
+  // Fetch the question data based on the serial number provided in the url
   let { data: question, error } = await supabase
     .from('questions')
     .select("*")
     // Filters
     .eq('serial_number', params.qid)
 
-  if (error !== null || question === null || question.length === 0) {
+  // Redirect if question does not exist or more than one question is returned
+  if (error !== null || question === null || question.length !== 1) {
     // TODO: redirect to 404 or 'question does not exist'
     redirect('/')
   }
 
+  // Tiptap extensions to generate appropriate HTML
   const tiptapExtensions = [
     StarterKit.configure({
       bulletList: {
@@ -75,34 +61,34 @@ export default async function Question({ params }: { params: { qid: string } }) 
         },
       },
     }),
-    Mathematics,
+    Mathematics.configure({
+      katexOptions: {
+        output: "html",
+      }
+    }),
     Underline,
     Image,
   ]
+
+  // Generate HTML for Rich Text (Tiptap JSON)
   const contextHTML = generateHTML(JSON.parse(question[0]?.context), tiptapExtensions)
   const questionHTML = generateHTML(JSON.parse(question[0]?.question), tiptapExtensions)
+
+  // Parse answer options
+  const answerData = JSON.parse(question[0]?.answer_options);
+  console.log(answerData);
 
 
   return (
     <div className="flex flex-grow w-full">
       <main className="flex flex-col justify-between items-center w-full">
         <div className="h-full w-full flex flex-col justify-center items-center">
-          {
-          /*
-            TODO:
-            - change width to w-full
-          */
-          }
           <ResizablePanelGroup direction="horizontal" className="h-full container">
             <ResizablePanel defaultSize={50}>
-              <div className="min-w-48 w-full max-w-[700px] flex flex-col justify-start items-center mx-auto px-10 py-6">
-                <p className="w-full flex justify-start items-center my-6 font-serif">
-                  {/*he.decode(question[0]?.context)*/}
-                  <span className='tiptap'>
-                    <span className="Tiptap-mathematics-render" dangerouslySetInnerHTML={{ __html: contextHTML }}>
-                    </span>
-                  </span>
-                </p>
+              <div className="min-w-48 w-full max-w-[700px] flex flex-col justify-start items-start mx-auto px-10 py-6">
+                <div className="w-full flex justify-start items-start my-6 font-serif">
+                  <span className="tiptap" dangerouslySetInnerHTML={{ __html: contextHTML }}></span>
+                </div>
               </div>
             </ResizablePanel>
             <ResizableHandle className="border-2" />
@@ -120,9 +106,7 @@ export default async function Question({ params }: { params: { qid: string } }) 
                 </div>
 
                 <div className="w-full flex justify-start items-start my-6 font-serif">
-                  <span className='tiptap'>
-                    <span className="Tiptap-mathematics-render" dangerouslySetInnerHTML={{ __html: questionHTML }}>
-                    </span>
+                  <span className="tiptap" dangerouslySetInnerHTML={{ __html: questionHTML }}>
                   </span>
                 </div>
 
@@ -131,25 +115,25 @@ export default async function Question({ params }: { params: { qid: string } }) 
                     <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
                       A
                     </span>
-                    scholarly
+                    {answerData['A']}
                   </li>
                   <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950">
                     <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
                       B
                     </span>
-                    melodic
+                    {answerData['B']}
                   </li>
                   <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950">
                     <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
                       C
                     </span>
-                    jarring
+                    {answerData['C']}
                   </li>
                   <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950">
                     <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
                       D
                     </span>
-                    personal
+                    {answerData['D']}
                   </li>
                 </ol>
               </div>
