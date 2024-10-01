@@ -28,7 +28,7 @@ async function Header() {
 
         <div className="flex flex-row items-center space-x-4">
           <Menu size={20} />
-          <span className="font-bold"><Link href="/">SAT Prep</Link></span>
+          <span className="font-bold"><Link href="/">Kortex Academy</Link></span>
           <nav className="flex flex-row items-center space-x-4">
             {/*<Link href="/">Home</Link>*/}
           </nav>
