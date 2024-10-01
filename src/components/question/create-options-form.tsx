@@ -39,7 +39,7 @@ const CreateOptionsForm = (
     'B': '',
     'C': '',
     'D': '',
-    'correct': ''
+    'correct': 'A'
   }
   const answerRange = {
     'correct': '',
@@ -47,6 +47,7 @@ const CreateOptionsForm = (
   }
   // Add type to options
   const [options, setOptions] = useState(answerOptions);
+  const [range, setRange] = useState(answerRange);
 
   const handleOptionChange = (option: 'A'|'B'|'C'|'D'|'correct', value: string) => {
     answerOptions['A'] = options['A'];
@@ -57,6 +58,12 @@ const CreateOptionsForm = (
     answerOptions[option] = value;
     setOptions(answerOptions);
   }
+  const handleRangeChange = (field: 'correct'|'error', value: string) => {
+    answerRange['correct'] = range['correct'];
+    answerRange['error'] = range['error'];
+    answerRange[field] = value;
+    setRange(answerRange);
+  }
 
   const [type, setType] = useState<string>('mcq');
   useEffect(() => {
@@ -64,7 +71,7 @@ const CreateOptionsForm = (
       handleSubmit(
         {
           type,
-          options: type==='mcq' ? options : answerRange,
+          options: type==='mcq' ? options : range,
         }
       );
     }
@@ -141,9 +148,11 @@ const CreateOptionsForm = (
       </TabsContent>
       <TabsContent value="spr">
         <div className="flex flex-row justify-start items-center space-x-2">
-          <Input type="text" placeholder="Correct answer" className="rounded border border-neutral-950" />
+          <Input type="text" placeholder="Correct answer" className="rounded border border-neutral-950"
+           value={range['correct']} onChange={(e) => handleRangeChange('correct', e.target.value)} />
           <p>+/-</p>
-          <Input type="text" placeholder="Allowed error" className="rounded border border-neutral-950" />
+          <Input type="text" placeholder="Allowed error" className="rounded border border-neutral-950"
+            value={range['error']} onChange={(e) => handleRangeChange('error', e.target.value)} />
         </div>
       </TabsContent>
     </Tabs>
