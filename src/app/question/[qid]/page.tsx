@@ -74,8 +74,8 @@ export default async function Question({ params }: { params: { qid: string } }) 
                 </div>
 
                 <ol className="w-full space-y-3">
-                  <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950">
-                    <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
+                  <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950 cursor-pointer hover:border-primary">
+                    <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium hover:border-primary hover:text-primary">
                       A
                     </span>
                     {answerData['A']}
