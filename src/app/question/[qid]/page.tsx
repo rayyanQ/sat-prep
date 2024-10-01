@@ -27,6 +27,11 @@ import {
   DoorOpen,
   TriangleAlert
 } from "lucide-react";
+import { generateHTML } from '@tiptap/html'
+import StarterKit from '@tiptap/starter-kit'
+import Underline from '@tiptap/extension-underline'
+import Mathematics from '@tiptap-pro/extension-mathematics'
+import Image from "@tiptap/extension-image"
 // TODO: add types for he
 // import he from 'he';
 
@@ -51,6 +56,32 @@ export default async function Question({ params }: { params: { qid: string } }) 
     redirect('/')
   }
 
+  const tiptapExtensions = [
+    StarterKit.configure({
+      bulletList: {
+        HTMLAttributes: {
+          class: 'list-disc pl-6',
+        },
+      },
+      orderedList: {
+        HTMLAttributes: {
+          class: 'list-decimal pl-6',
+        },
+      },
+      heading: {
+        levels: [1, 2, 3],
+        HTMLAttributes: {
+          class: 'text-style',
+        },
+      },
+    }),
+    Mathematics,
+    Underline,
+    Image,
+  ]
+  const contextHTML = generateHTML(JSON.parse(question[0]?.context), tiptapExtensions)
+  const questionHTML = generateHTML(JSON.parse(question[0]?.question), tiptapExtensions)
+
 
   return (
     <div className="flex flex-grow w-full">
@@ -67,7 +98,10 @@ export default async function Question({ params }: { params: { qid: string } }) 
               <div className="min-w-48 w-full max-w-[700px] flex flex-col justify-start items-center mx-auto px-10 py-6">
                 <p className="w-full flex justify-start items-center my-6 font-serif">
                   {/*he.decode(question[0]?.context)*/}
-                  {question[0]?.context}
+                  <span className='tiptap'>
+                    <span className="Tiptap-mathematics-render" dangerouslySetInnerHTML={{ __html: contextHTML }}>
+                    </span>
+                  </span>
                 </p>
               </div>
             </ResizablePanel>
@@ -85,9 +119,12 @@ export default async function Question({ params }: { params: { qid: string } }) 
                   <div>ABC</div>
                 </div>
 
-                <p className="w-full flex justify-start items-center my-6 font-serif">
-                  {question[0]?.question}
-                </p>
+                <div className="w-full flex justify-start items-start my-6 font-serif">
+                  <span className='tiptap'>
+                    <span className="Tiptap-mathematics-render" dangerouslySetInnerHTML={{ __html: questionHTML }}>
+                    </span>
+                  </span>
+                </div>
 
                 <ol className="w-full space-y-3">
                   <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950">
