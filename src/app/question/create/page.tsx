@@ -54,6 +54,17 @@ export default function NewQuestion({ params }: { params: { qid: string } }) {
   const handleSubmit = () => {
     setSubmitted(true);
     //async programming
+    /**
+     * create a promise that waits for the submitted variable to update
+     *  use a while loop that runs as long as the submitted variable is true,
+     *  within the loop setTimeout to wait for 0.5 second before checking again
+     *  once the submitted variable is false, break out of the loop
+     *  once the loop is broken, submit the data to the server
+     *  - run the loop 20 times, if after 20 times the submitted variable is still true, show an error message
+     */
+    /**
+     * It needs to be inside a promise, because otherwise the program would stop everything else until the loop is done
+     */
   }
 
   useEffect(() => {
