@@ -7,20 +7,13 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
-import {
-  Bookmark,
-} from "lucide-react";
-import { generateHTML } from '@tiptap/html'
-import StarterKit from '@tiptap/starter-kit'
-import Underline from '@tiptap/extension-underline'
-import Mathematics from '@tiptap-pro/extension-mathematics'
-import Image from "@tiptap/extension-image"
-import 'katex/dist/katex.min.css'
+import { Bookmark } from "lucide-react";
+import { RichTextDisplay } from "@/components/rich-text-display";
 
 
 export default async function Question({ params }: { params: { qid: string } }) {
 
-  const supabase = createClient()
+  const supabase = createClient();
 
   // Check if the user is logged in
   const { data: userData, error: userError } = await supabase.auth.getUser()
@@ -41,42 +34,8 @@ export default async function Question({ params }: { params: { qid: string } }) 
     redirect('/')
   }
 
-  // Tiptap extensions to generate appropriate HTML
-  const tiptapExtensions = [
-    StarterKit.configure({
-      bulletList: {
-        HTMLAttributes: {
-          class: 'list-disc pl-6',
-        },
-      },
-      orderedList: {
-        HTMLAttributes: {
-          class: 'list-decimal pl-6',
-        },
-      },
-      heading: {
-        levels: [1, 2, 3],
-        HTMLAttributes: {
-          class: 'text-style',
-        },
-      },
-    }),
-    Mathematics.configure({
-      katexOptions: {
-        output: "html",
-      }
-    }),
-    Underline,
-    Image,
-  ]
-
-  // Generate HTML for Rich Text (Tiptap JSON)
-  const contextHTML = generateHTML(JSON.parse(question[0]?.context), tiptapExtensions)
-  const questionHTML = generateHTML(JSON.parse(question[0]?.question), tiptapExtensions)
-
   // Parse answer options
   const answerData = JSON.parse(question[0]?.answer_options);
-  console.log(answerData);
 
 
   return (
@@ -87,7 +46,7 @@ export default async function Question({ params }: { params: { qid: string } }) 
             <ResizablePanel defaultSize={50}>
               <div className="min-w-48 w-full max-w-[700px] flex flex-col justify-start items-start mx-auto px-10 py-6">
                 <div className="w-full flex justify-start items-start my-6 font-serif">
-                  <span className="tiptap" dangerouslySetInnerHTML={{ __html: contextHTML }}></span>
+                  <RichTextDisplay content={question[0]?.context}/>
                 </div>
               </div>
             </ResizablePanel>
@@ -106,8 +65,7 @@ export default async function Question({ params }: { params: { qid: string } }) 
                 </div>
 
                 <div className="w-full flex justify-start items-start my-6 font-serif">
-                  <span className="tiptap" dangerouslySetInnerHTML={{ __html: questionHTML }}>
-                  </span>
+                  <RichTextDisplay content={question[0]?.question}/>
                 </div>
 
                 <ol className="w-full space-y-3">
