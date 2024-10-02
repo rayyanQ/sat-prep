@@ -8,7 +8,7 @@ const CreateQuestionFooter = ({handleSubmit}: {handleSubmit: () => void}) => {
           <b>Rayyan Quraishi</b>
         </div>
         <div className="col-span-1 flex flex-row justify-end items-center space-x-4">
-          <Button variant="outline">Preview</Button>
+          <Button variant="outline">Save</Button>
           <Button onClick={() => handleSubmit()}>Submit</Button>
         </div>
       </div>

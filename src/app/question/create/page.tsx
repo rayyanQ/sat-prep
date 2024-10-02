@@ -8,9 +8,10 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
 import { H4 } from '@/components/ui/heading';
-import CreateOptionsForm from "@/components/question/create-options-form"
-import CreateQuestionFooter from "@/components/question/create-question-footer"
-import RichTextEditor from '@/components/rich-text-editor'
+import CreateOptionsForm from "@/components/create-question/options-form"
+import CreateQuestionFooter from "@/components/create-question/footer"
+import RichTextEditor from '@/components/create-question/rich-text-editor'
+import { createQuestion } from './actions'
 
 
 import { useEffect, useState } from 'react';
@@ -42,6 +43,7 @@ export default function NewQuestion({ params }: { params: { qid: string } }) {
   const [answers, setAnswers] = useState<string>('');
   const [submitted, setSubmitted] = useState<boolean>(false);
 
+
   const handleContextSubmit = (context: object) => {
     setContext(JSON.stringify(context));
   }
@@ -52,25 +54,29 @@ export default function NewQuestion({ params }: { params: { qid: string } }) {
     setAnswers(JSON.stringify(answer));
   }
   const handleSubmit = () => {
-    setSubmitted(true);
-    //async programming
+    setSubmitted(true); // flag used to trigger callback functions in children components
   }
 
+  // Runs when the data is updated
   useEffect(() => {
-    if (submitted) {
-      // Collect answer type - answerType
-      //  if mcq, then collect options and correct answer
-      //  if spr, then collect correct answer and allowed error
-      // Validate input
-      // Submit data to the server
-      // Error handling
-      // On success, redirect to the admin dashboard page
-      console.log(context);
-      console.log(question);
-      console.log(answers);
-      setSubmitted(false);
-    }
-  }, [submitted, context, question, answers]);
+    const questionData = {
+      "context": context,
+      "question": question,
+      "answers": answers
+    };
+    createQuestion(questionData);
+    // Validate input
+    // Submit data to the server
+    // Error handling
+    // On success, redirect to the admin dashboard page
+    // server action to process data
+  }, [context, question, answers]);
+
+  // Runs when the submitted flag is updated
+  useEffect(() => {
+    if (submitted) setSubmitted(false);
+  }, [submitted]);
+
 
   return(
     <div className="flex flex-grow w-full">

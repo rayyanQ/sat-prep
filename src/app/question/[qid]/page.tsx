@@ -1,74 +1,86 @@
-import { redirect } from 'next/navigation'
-import { createClient } from '@/lib/supabase/server'
+"use client"
 
-import { Button } from "@/components/ui/button";
+import { redirect } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
+
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import Header from "@/components/Header";
-import {
-  EllipsisVertical,
-  PencilLine,
-  Bookmark,
-  CircleHelp,
-  Keyboard,
-  PersonStanding,
-  ScanLine,
-  DoorOpen,
-  TriangleAlert
-} from "lucide-react";
-// TODO: add types for he
-// import he from 'he';
+import { Bookmark } from "lucide-react";
+import { RichTextDisplay, RichTextDisplaySkeleton } from "@/components/question/rich-text-display";
+import { MCQInput, MCQInputSkeleton } from "@/components/question/mcq-input";
+import { SPRInput } from "@/components/question/spr-input";
+import { QuestionFooter } from "@/components/question/footer";
 
-export default async function Question({ params }: { params: { qid: string } }) {
+import { useState, useEffect } from 'react';
 
-  const supabase = createClient()
 
-  const { data: userData, error: userError } = await supabase.auth.getUser()
-  if (userError || !userData?.user) {
-    redirect('/login')
+export default function Question({ params }: { params: { qid: string } }) {
+
+  const [question, setQuestion] = useState<any>([]);
+  const [questionError, setQuestionError] = useState<any>(null);
+  const [count, setCount] = useState<any>(0);
+  const [answerData, setAnswerData] = useState<any>(null);
+  const [userAnswer, setUserAnswer] = useState<string>("-");
+
+  async function fetchData() {
+
+    const supabase = createClient();
+
+    // Check if the user is logged in
+    const { data: userData, error: userError } = await supabase.auth.getUser()
+    if (userError || !userData?.user) {
+      redirect('/login')
+    }
+    
+    // Fetch the question data based on the serial number provided in the url
+    let { data: questionData, error: questionError } = await supabase
+      .from('questions')
+      .select("*")
+      // Filters
+      .eq('serial_number', params.qid)
+
+    // Redirect if question does not exist or more than one question is returned
+    if (questionError !== null || questionData === null || questionData.length !== 1) {
+      // TODO: redirect to 404 or 'question does not exist'
+      redirect('/')
+    }
+
+    // Set question data
+    setQuestion(questionData);
+    setQuestionError(questionError);
+    setAnswerData(JSON.parse(questionData[0]?.answer_options));
+
+    // Get the total number of questions
+    const { count, error: countError } = await supabase
+      .from('questions')
+      .select('*', { count: 'exact', head: true })
+    setCount(count);
+
   }
-  
-  // https://tiptap.dev/docs/guides/output-json-html#render
-  let { data: question, error } = await supabase
-    .from('questions')
-    .select("*")
-    // Filters
-    .eq('serial_number', params.qid)
-
-  if (error !== null || question === null || question.length === 0) {
-    // TODO: redirect to 404 or 'question does not exist'
-    redirect('/')
-  }
-
+  useEffect(() => {fetchData()}, []);
 
   return (
     <div className="flex flex-grow w-full">
       <main className="flex flex-col justify-between items-center w-full">
         <div className="h-full w-full flex flex-col justify-center items-center">
-          {
-          /*
-            TODO:
-            - change width to w-full
-          */
-          }
+
           <ResizablePanelGroup direction="horizontal" className="h-full container">
             <ResizablePanel defaultSize={50}>
-              <div className="min-w-48 w-full max-w-[700px] flex flex-col justify-start items-center mx-auto px-10 py-6">
-                <p className="w-full flex justify-start items-center my-6 font-serif">
-                  {/*he.decode(question[0]?.context)*/}
-                  {question[0]?.context}
-                </p>
+              <div className="min-w-48 w-full max-w-[700px] flex flex-col justify-start items-start mx-auto px-10 py-6">
+                <div className="w-full flex justify-start items-start my-6 font-serif">
+                  {
+                    question.length === 0 ?
+                      <RichTextDisplaySkeleton />
+                      :
+                      questionError !== null ?
+                        <div>Error fetching question</div>
+                        :
+                          <RichTextDisplay content={question[0]?.context}/>
+                  }
+                </div>
               </div>
             </ResizablePanel>
             <ResizableHandle className="border-2" />
@@ -85,63 +97,39 @@ export default async function Question({ params }: { params: { qid: string } }) 
                   <div>ABC</div>
                 </div>
 
-                <p className="w-full flex justify-start items-center my-6 font-serif">
-                  {question[0]?.question}
-                </p>
+                <div className="w-full flex justify-start items-start my-6 font-serif">
+                  {
+                    question.length === 0 ?
+                      <RichTextDisplaySkeleton />
+                      :
+                      questionError !== null ?
+                        <div>Error fetching question</div>
+                        :
+                          <RichTextDisplay content={question[0]?.question}/>
+                  }
+                </div>
 
-                <ol className="w-full space-y-3">
-                  <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950">
-                    <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
-                      A
-                    </span>
-                    scholarly
-                  </li>
-                  <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950">
-                    <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
-                      B
-                    </span>
-                    melodic
-                  </li>
-                  <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950">
-                    <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
-                      C
-                    </span>
-                    jarring
-                  </li>
-                  <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950">
-                    <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
-                      D
-                    </span>
-                    personal
-                  </li>
-                </ol>
+                {
+                  answerData === null ?
+                  <MCQInputSkeleton />
+                  :
+                  questionError !== null ?
+                    <div>Error fetching question</div>
+                    :
+                    question[0]?.question_type === "mcq" ?
+                      <MCQInput options={answerData} selected={userAnswer} handleUpdate={setUserAnswer} />
+                      :
+                      <SPRInput />
+                }
+
               </div>
             </ResizablePanel>
           </ResizablePanelGroup>
+
         </div>
         
-        <QuestionFooter />
+        <QuestionFooter currentQuestion={question[0]?.serial_number} questionCount={count} />
       </main>
     </div>
-  );
-}
-
-
-const QuestionFooter = () => {
-  return (
-    <footer className="bottom-0 flex flex-row justify-center items-center w-full border-t">
-      <div className="container h-14 px-10 grid grid-cols-3">
-        <div className="col-span-1 flex flex-row justify-start items-center">
-          <b>Rayyan Quraishi</b>
-        </div>
-        <div className="col-span-1 flex flex-row justify-center items-center">
-          <div className="bg-neutral-950 text-white px-3 py-1 rounded">Question 1 of 8</div>
-        </div>
-        <div className="col-span-1 flex flex-row justify-end items-center space-x-4">
-          <Button variant="outline">Previous</Button>
-          <Button>Submit</Button>
-        </div>
-      </div>
-    </footer>
   );
 }

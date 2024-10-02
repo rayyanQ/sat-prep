@@ -1,73 +1,10 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 
-import { Question, columns } from "@/components/QuestionTable/columns"
-import { DataTable } from "@/components/QuestionTable/data-table"
+import { Question, columns } from "@/components/question-table/columns"
+import { DataTable } from "@/components/question-table/data-table"
 import { H2 } from "@/components/ui/heading"
 
-
-/*const questions: Question[] = [
-  {
-    uid: "al56d",
-    id: 1,
-    title: "Algebra word problem",
-    section: "Math",
-    domain: "Algebra",
-    topic: "Linear equation in 1 variable",
-    difficulty: "Easy",
-    status: "Incomplete",
-  },
-  {
-    uid: "al9sx",
-    id: 2,
-    title: "Algebra word problem 2",
-    section: "Math",
-    domain: "Algebra",
-    topic: "Linear functions",
-    difficulty: "Easy",
-    status: "Complete",
-  },
-  {
-    uid: "al56d",
-    id: 3,
-    title: "Purpose of underlined text",
-    section: "English",
-    domain: "Craft and Structure",
-    topic: "-",
-    difficulty: "Easy",
-    status: "Incomplete",
-  },
-  {
-    uid: "al56d",
-    id: 4,
-    title: "Algebra word problem",
-    section: "Math",
-    domain: "Algebra",
-    topic: "Linear equation in 1 variable",
-    difficulty: "Easy",
-    status: "Incomplete",
-  },
-  {
-    uid: "al9sx",
-    id: 5,
-    title: "Algebra word problem 2",
-    section: "Math",
-    domain: "Algebra",
-    topic: "Linear functions",
-    difficulty: "Easy",
-    status: "Complete",
-  },
-  {
-    uid: "al56d",
-    id: 6,
-    title: "Purpose of underlined text",
-    section: "English",
-    domain: "Craft and Structure",
-    topic: "-",
-    difficulty: "Easy",
-    status: "Incomplete",
-  },
-]*/
 
 // Main Home page component
 const Home = () => {

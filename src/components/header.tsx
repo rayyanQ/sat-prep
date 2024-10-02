@@ -10,11 +10,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Menu } from "lucide-react"
 
-/**
- * TODO
- * - check if user is logged in or not
- *    and accordingly show the right side of the header
- */
 async function Header() {
 
   const supabase = createClient()
@@ -27,8 +22,8 @@ async function Header() {
       <div className="container h-14 flex flex-row justify-between items-center">
 
         <div className="flex flex-row items-center space-x-4">
-          <Menu size={20} />
-          <span className="font-bold"><Link href="/">SAT Prep</Link></span>
+          {/*<Menu size={20} />*/}
+          <span><Link href="/">Kortex Academy</Link></span>
           <nav className="flex flex-row items-center space-x-4">
             {/*<Link href="/">Home</Link>*/}
           </nav>
