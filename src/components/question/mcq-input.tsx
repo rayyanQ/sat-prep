@@ -1,3 +1,5 @@
+import { Skeleton } from "@/components/ui/skeleton"
+
 type OptionsType = {
   "A": string,
   "B": string,
@@ -40,4 +42,14 @@ const MCQOption = (
   );
 }
 
-export { MCQInput };
+const MCQOptionSkeleton = () => <Skeleton className="w-full h-12 px-4 rounded" />
+const MCQInputSkeleton = () => (
+  <div className="w-full space-y-3">
+    <MCQOptionSkeleton />
+    <MCQOptionSkeleton />
+    <MCQOptionSkeleton />
+    <MCQOptionSkeleton />
+  </div>
+)
+
+export { MCQInput, MCQInputSkeleton };

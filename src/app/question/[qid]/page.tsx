@@ -9,8 +9,8 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
 import { Bookmark } from "lucide-react";
-import { RichTextDisplay } from "@/components/question/rich-text-display";
-import { MCQInput } from "@/components/question/mcq-input";
+import { RichTextDisplay, RichTextDisplaySkeleton } from "@/components/question/rich-text-display";
+import { MCQInput, MCQInputSkeleton } from "@/components/question/mcq-input";
 import { SPRInput } from "@/components/question/spr-input";
 import { QuestionFooter } from "@/components/question/footer";
 
@@ -21,7 +21,7 @@ export default function Question({ params }: { params: { qid: string } }) {
 
   const [question, setQuestion] = useState<any>([]);
   const [questionError, setQuestionError] = useState<any>(null);
-  const [count, setCount] = useState<any>(-1);
+  const [count, setCount] = useState<any>(0);
   const [answerData, setAnswerData] = useState<any>(null);
   const [userAnswer, setUserAnswer] = useState<string>("-");
 
@@ -73,7 +73,7 @@ export default function Question({ params }: { params: { qid: string } }) {
                 <div className="w-full flex justify-start items-start my-6 font-serif">
                   {
                     question.length === 0 ?
-                      <div>Loading...</div>
+                      <RichTextDisplaySkeleton />
                       :
                       questionError !== null ?
                         <div>Error fetching question</div>
@@ -100,7 +100,7 @@ export default function Question({ params }: { params: { qid: string } }) {
                 <div className="w-full flex justify-start items-start my-6 font-serif">
                   {
                     question.length === 0 ?
-                      <div>Loading...</div>
+                      <RichTextDisplaySkeleton />
                       :
                       questionError !== null ?
                         <div>Error fetching question</div>
@@ -111,7 +111,7 @@ export default function Question({ params }: { params: { qid: string } }) {
 
                 {
                   answerData === null ?
-                  <div>Loading...</div>
+                  <MCQInputSkeleton />
                   :
                   questionError !== null ?
                     <div>Error fetching question</div>

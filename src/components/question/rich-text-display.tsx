@@ -1,5 +1,6 @@
 "use client";
 
+import { Skeleton } from '@/components/ui/skeleton';
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
@@ -49,4 +50,12 @@ const RichTextDisplay = ({ content }: { content: string }) => {
   )
 }
 
-export { RichTextDisplay };
+const RichTextDisplaySkeleton = () => (
+  <span className="w-full flex flex-col justify-start items-start">
+    <Skeleton className="w-2/5 h-16 mb-2" />
+    <Skeleton className="w-3/5 h-12 mb-2" />
+    <Skeleton className="w-4/5 h-12 mb-2" />
+  </span>
+)
+
+export { RichTextDisplay, RichTextDisplaySkeleton };
