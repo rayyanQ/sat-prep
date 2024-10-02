@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from 'react';
+
 type OptionsType = {
   "A": string,
   "B": string,
@@ -6,20 +10,34 @@ type OptionsType = {
 }
 
 const MCQInput = ({options}: {options: OptionsType}) => {
+  const [selected, setSelected] = useState<string>('-');
+
   return (
     <ol className="w-full space-y-3">
-      <MCQOption title="A" value={options['A']} />
-      <MCQOption title="B" value={options['B']} />
-      <MCQOption title="C" value={options['C']} />
-      <MCQOption title="D" value={options['D']} />
+      <MCQOption title="A" value={options['A']} selected={selected==="A"} handleClick={setSelected} />
+      <MCQOption title="B" value={options['B']} selected={selected==="B"} handleClick={setSelected} />
+      <MCQOption title="C" value={options['C']} selected={selected==="C"} handleClick={setSelected} />
+      <MCQOption title="D" value={options['D']} selected={selected==="D"} handleClick={setSelected} />
     </ol>
   );
 }
 
-const MCQOption = ({title, value}: {title: string, value: string}) => {
+const MCQOption = (
+  {title, value, selected=false, handleClick}:
+  {
+    title: string,
+    value: string,
+    selected?: boolean,
+    handleClick:(newState: string) => void
+  }
+) => {
   return (
-    <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950 hover:border-primary cursor-pointer">
-      <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
+    <li className={`w-full h-12 px-4 flex flex-row justify-start items-center rounded
+      hover:outline hover:outline-offset-2 hover:outline-2 hover:outline-primary cursor-pointer
+      ${selected ? `border border-primary bg-primary/10` : `border border-neutral-950`}`}
+      onClick={() => handleClick(title)}
+    >
+      <span className={`flex justify-center items-center border-2 ${selected ? `border-primary text-primary` : `border-neutral-950`} rounded-full size-6 mr-6 font-medium`}>
         {title}
       </span>
       {value}
