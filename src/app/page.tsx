@@ -1,8 +1,8 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 
-import { Question, columns } from "@/components/QuestionTable/columns"
-import { DataTable } from "@/components/QuestionTable/data-table"
+import { Question, columns } from "@/components/question-table/columns"
+import { DataTable } from "@/components/question-table/data-table"
 import { H2 } from "@/components/ui/heading"
 
 

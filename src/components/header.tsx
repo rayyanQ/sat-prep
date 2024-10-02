@@ -10,11 +10,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Menu } from "lucide-react"
 
-/**
- * TODO
- * - check if user is logged in or not
- *    and accordingly show the right side of the header
- */
 async function Header() {
 
   const supabase = createClient()

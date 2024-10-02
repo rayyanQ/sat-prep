@@ -1,6 +1,6 @@
 import { login } from './actions'
 import Link from "next/link"
-import Header from "@/components/Header"
+import Header from "@/components/header"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"

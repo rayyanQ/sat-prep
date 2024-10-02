@@ -1,14 +1,17 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 
-import { Button } from "@/components/ui/button";
+
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
 import { Bookmark } from "lucide-react";
-import { RichTextDisplay } from "@/components/rich-text-display";
+import { RichTextDisplay } from "@/components/question/rich-text-display";
+import { MCQInput } from "@/components/question/mcq-input";
+import { SPRInput } from "@/components/question/spr-input";
+import { QuestionFooter } from "@/components/question/footer";
 
 
 export default async function Question({ params }: { params: { qid: string } }) {
@@ -47,6 +50,7 @@ export default async function Question({ params }: { params: { qid: string } }) 
     <div className="flex flex-grow w-full">
       <main className="flex flex-col justify-between items-center w-full">
         <div className="h-full w-full flex flex-col justify-center items-center">
+
           <ResizablePanelGroup direction="horizontal" className="h-full container">
             <ResizablePanel defaultSize={50}>
               <div className="min-w-48 w-full max-w-[700px] flex flex-col justify-start items-start mx-auto px-10 py-6">
@@ -73,59 +77,21 @@ export default async function Question({ params }: { params: { qid: string } }) 
                   <RichTextDisplay content={question[0]?.question}/>
                 </div>
 
-                <ol className="w-full space-y-3">
-                  <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950 cursor-pointer hover:border-primary">
-                    <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium hover:border-primary hover:text-primary">
-                      A
-                    </span>
-                    {answerData['A']}
-                  </li>
-                  <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950">
-                    <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
-                      B
-                    </span>
-                    {answerData['B']}
-                  </li>
-                  <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950">
-                    <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
-                      C
-                    </span>
-                    {answerData['C']}
-                  </li>
-                  <li className="w-full h-12 px-4 flex flex-row justify-start items-center rounded border border-neutral-950">
-                    <span className="flex justify-center items-center border-2 border-neutral-950 rounded-full size-6 mr-6 font-medium">
-                      D
-                    </span>
-                    {answerData['D']}
-                  </li>
-                </ol>
+                {
+                  question[0]?.question_type === "mcq" ?
+                    <MCQInput options={answerData} />
+                    :
+                    <SPRInput />
+                }
+
               </div>
             </ResizablePanel>
           </ResizablePanelGroup>
+
         </div>
         
         <QuestionFooter currentQuestion={question[0]?.serial_number} questionCount={count} />
       </main>
     </div>
-  );
-}
-
-
-const QuestionFooter = ({currentQuestion, questionCount}: {currentQuestion: number, questionCount: number|null}) => {
-  return (
-    <footer className="bottom-0 flex flex-row justify-center items-center w-full border-t">
-      <div className="container h-14 px-10 grid grid-cols-3">
-        <div className="col-span-1 flex flex-row justify-start items-center">
-          <p>Attempt #</p>
-        </div>
-        <div className="col-span-1 flex flex-row justify-center items-center">
-          <div className="bg-neutral-950 text-white px-3 py-1 rounded">Question {currentQuestion} of {questionCount}</div>
-        </div>
-        <div className="col-span-1 flex flex-row justify-end items-center space-x-4">
-          <Button variant="outline">Previous</Button>
-          <Button>Submit</Button>
-        </div>
-      </div>
-    </footer>
   );
 }

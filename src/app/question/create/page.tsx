@@ -8,9 +8,9 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
 import { H4 } from '@/components/ui/heading';
-import CreateOptionsForm from "@/components/question/create-options-form"
-import CreateQuestionFooter from "@/components/question/create-question-footer"
-import RichTextEditor from '@/components/rich-text-editor'
+import CreateOptionsForm from "@/components/create-question/options-form"
+import CreateQuestionFooter from "@/components/create-question/footer"
+import RichTextEditor from '@/components/create-question/rich-text-editor'
 import { createQuestion } from './actions'
 
 
