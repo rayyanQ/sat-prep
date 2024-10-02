@@ -1,7 +1,3 @@
-"use client";
-
-import { useState } from 'react';
-
 type OptionsType = {
   "A": string,
   "B": string,
@@ -9,15 +5,14 @@ type OptionsType = {
   "D": string
 }
 
-const MCQInput = ({options}: {options: OptionsType}) => {
-  const [selected, setSelected] = useState<string>('-');
+const MCQInput = ({options, selected, handleUpdate}: {options: OptionsType, selected: string, handleUpdate: (newVal: string) => void}) => {
 
   return (
     <ol className="w-full space-y-3">
-      <MCQOption title="A" value={options['A']} selected={selected==="A"} handleClick={setSelected} />
-      <MCQOption title="B" value={options['B']} selected={selected==="B"} handleClick={setSelected} />
-      <MCQOption title="C" value={options['C']} selected={selected==="C"} handleClick={setSelected} />
-      <MCQOption title="D" value={options['D']} selected={selected==="D"} handleClick={setSelected} />
+      <MCQOption title="A" value={options['A']} selected={selected==="A"} handleClick={handleUpdate} />
+      <MCQOption title="B" value={options['B']} selected={selected==="B"} handleClick={handleUpdate} />
+      <MCQOption title="C" value={options['C']} selected={selected==="C"} handleClick={handleUpdate} />
+      <MCQOption title="D" value={options['D']} selected={selected==="D"} handleClick={handleUpdate} />
     </ol>
   );
 }
