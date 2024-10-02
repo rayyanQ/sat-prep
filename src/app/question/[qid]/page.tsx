@@ -1,5 +1,7 @@
+"use client"
+
 import { redirect } from 'next/navigation'
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/client'
 
 import {
   ResizableHandle,
@@ -12,38 +14,53 @@ import { MCQInput } from "@/components/question/mcq-input";
 import { SPRInput } from "@/components/question/spr-input";
 import { QuestionFooter } from "@/components/question/footer";
 
+import { useState, useEffect } from 'react';
 
-export default async function Question({ params }: { params: { qid: string } }) {
 
-  const supabase = createClient();
+export default function Question({ params }: { params: { qid: string } }) {
 
-  // Check if the user is logged in
-  const { data: userData, error: userError } = await supabase.auth.getUser()
-  if (userError || !userData?.user) {
-    redirect('/login')
+  const [question, setQuestion] = useState<any>([]);
+  const [questionError, setQuestionError] = useState<any>(null);
+  const [count, setCount] = useState<any>(-1);
+  const [answerData, setAnswerData] = useState<any>(null);
+  const [userAnswer, setUserAnswer] = useState<string>("-");
+
+  async function fetchData() {
+
+    const supabase = createClient();
+
+    // Check if the user is logged in
+    const { data: userData, error: userError } = await supabase.auth.getUser()
+    if (userError || !userData?.user) {
+      redirect('/login')
+    }
+    
+    // Fetch the question data based on the serial number provided in the url
+    let { data: questionData, error: questionError } = await supabase
+      .from('questions')
+      .select("*")
+      // Filters
+      .eq('serial_number', params.qid)
+
+    // Redirect if question does not exist or more than one question is returned
+    if (questionError !== null || questionData === null || questionData.length !== 1) {
+      // TODO: redirect to 404 or 'question does not exist'
+      redirect('/')
+    }
+
+    // Set question data
+    setQuestion(questionData);
+    setQuestionError(questionError);
+    setAnswerData(JSON.parse(questionData[0]?.answer_options));
+
+    // Get the total number of questions
+    const { count, error: countError } = await supabase
+      .from('questions')
+      .select('*', { count: 'exact', head: true })
+    setCount(count);
+
   }
-  
-  // Fetch the question data based on the serial number provided in the url
-  let { data: question, error } = await supabase
-    .from('questions')
-    .select("*")
-    // Filters
-    .eq('serial_number', params.qid)
-
-  // Redirect if question does not exist or more than one question is returned
-  if (error !== null || question === null || question.length !== 1) {
-    // TODO: redirect to 404 or 'question does not exist'
-    redirect('/')
-  }
-
-  // Get the total number of questions
-  const { count, error: countError } = await supabase
-    .from('questions')
-    .select('*', { count: 'exact', head: true })
-
-  // Parse answer options
-  const answerData = JSON.parse(question[0]?.answer_options);
-
+  useEffect(() => {fetchData()}, []);
 
   return (
     <div className="flex flex-grow w-full">
@@ -54,7 +71,15 @@ export default async function Question({ params }: { params: { qid: string } }) 
             <ResizablePanel defaultSize={50}>
               <div className="min-w-48 w-full max-w-[700px] flex flex-col justify-start items-start mx-auto px-10 py-6">
                 <div className="w-full flex justify-start items-start my-6 font-serif">
-                  <RichTextDisplay content={question[0]?.context}/>
+                  {
+                    question.length === 0 ?
+                      <div>Loading...</div>
+                      :
+                      questionError !== null ?
+                        <div>Error fetching question</div>
+                        :
+                          <RichTextDisplay content={question[0]?.context}/>
+                  }
                 </div>
               </div>
             </ResizablePanel>
@@ -73,14 +98,28 @@ export default async function Question({ params }: { params: { qid: string } }) 
                 </div>
 
                 <div className="w-full flex justify-start items-start my-6 font-serif">
-                  <RichTextDisplay content={question[0]?.question}/>
+                  {
+                    question.length === 0 ?
+                      <div>Loading...</div>
+                      :
+                      questionError !== null ?
+                        <div>Error fetching question</div>
+                        :
+                          <RichTextDisplay content={question[0]?.question}/>
+                  }
                 </div>
 
                 {
-                  question[0]?.question_type === "mcq" ?
-                    <MCQInput options={answerData} />
+                  answerData === null ?
+                  <div>Loading...</div>
+                  :
+                  questionError !== null ?
+                    <div>Error fetching question</div>
                     :
-                    <SPRInput />
+                    question[0]?.question_type === "mcq" ?
+                      <MCQInput options={answerData} selected={userAnswer} handleUpdate={setUserAnswer} />
+                      :
+                      <SPRInput />
                 }
 
               </div>
