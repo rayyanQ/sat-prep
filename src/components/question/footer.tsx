@@ -1,6 +1,9 @@
 import { Button } from '@/components/ui/button';
 
-const QuestionFooter = ({currentQuestion, questionCount}: {currentQuestion: number, questionCount: number|null}) => {
+const QuestionFooter = (
+  {currentQuestion, questionCount, handleSubmit}:
+  {currentQuestion: number, questionCount: number|null, handleSubmit: () => void}
+) => {
   return (
     <footer className="bottom-0 flex flex-row justify-center items-center w-full border-t">
       <div className="container h-14 px-10 grid grid-cols-3">
@@ -12,7 +15,7 @@ const QuestionFooter = ({currentQuestion, questionCount}: {currentQuestion: numb
         </div>
         <div className="col-span-1 flex flex-row justify-end items-center space-x-4">
           <Button variant="outline">Previous</Button>
-          <Button>Submit</Button>
+          <Button onClick={handleSubmit}>Submit</Button>
         </div>
       </div>
     </footer>

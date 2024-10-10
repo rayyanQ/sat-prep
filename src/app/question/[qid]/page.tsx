@@ -13,6 +13,7 @@ import { RichTextDisplay, RichTextDisplaySkeleton } from "@/components/question/
 import { MCQInput, MCQInputSkeleton } from "@/components/question/mcq-input";
 import { SPRInput } from "@/components/question/spr-input";
 import { QuestionFooter } from "@/components/question/footer";
+import { submitQuestion } from './actions';
 
 import { useState, useEffect } from 'react';
 
@@ -61,6 +62,19 @@ export default function Question({ params }: { params: { qid: string } }) {
 
   }
   useEffect(() => {fetchData()}, []);
+
+  const handleSubmit = async () => {
+    if (userAnswer === "-") {
+      alert("Please select an answer");
+      return;
+    }
+    const result = await submitQuestion({
+      uid: question[0]?.uid,
+      type: question[0]?.question_type,
+      answer: userAnswer
+    });
+    console.log(result);
+  }
 
   return (
     <div className="flex flex-grow w-full">
@@ -128,7 +142,11 @@ export default function Question({ params }: { params: { qid: string } }) {
 
         </div>
         
-        <QuestionFooter currentQuestion={question[0]?.serial_number} questionCount={count} />
+        <QuestionFooter
+          currentQuestion={question[0]?.serial_number}
+          questionCount={count}
+          handleSubmit={handleSubmit}
+        />
       </main>
     </div>
   );
