@@ -39,7 +39,7 @@ export default function Question({ params }: { params: { qid: string } }) {
     // Fetch the question data based on the serial number provided in the url
     let { data: questionData, error: questionError } = await supabase
       .from('questions')
-      .select("*")
+      .select("uid, serial_number, question, context, answer_options, question_type")
       // Filters
       .eq('serial_number', params.qid)
 
@@ -143,6 +143,7 @@ export default function Question({ params }: { params: { qid: string } }) {
         </div>
         
         <QuestionFooter
+          userAnswer={userAnswer}
           currentQuestion={question[0]?.serial_number}
           questionCount={count}
           handleSubmit={handleSubmit}

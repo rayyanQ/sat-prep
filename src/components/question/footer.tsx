@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button';
 
 const QuestionFooter = (
-  {currentQuestion, questionCount, handleSubmit}:
-  {currentQuestion: number, questionCount: number|null, handleSubmit: () => void}
+  {userAnswer, currentQuestion, questionCount, handleSubmit}:
+  {userAnswer: string, currentQuestion: number, questionCount: number|null, handleSubmit: () => void}
 ) => {
   return (
     <footer className="bottom-0 flex flex-row justify-center items-center w-full border-t">
@@ -15,7 +15,7 @@ const QuestionFooter = (
         </div>
         <div className="col-span-1 flex flex-row justify-end items-center space-x-4">
           <Button variant="outline">Previous</Button>
-          <Button onClick={handleSubmit}>Submit</Button>
+          <Button variant={userAnswer==="-" ? "secondary" : "default"} onClick={handleSubmit}>Submit</Button>
         </div>
       </div>
     </footer>
