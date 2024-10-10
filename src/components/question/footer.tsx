@@ -31,10 +31,13 @@ const QuestionFooter = (
           <div className="bg-neutral-950 text-white px-3 py-1 rounded">Question {currentQuestion} of {questionCount}</div>
         </div>
         <div className="col-span-1 flex flex-row justify-end items-center space-x-4">
-          <Button variant="outline">Previous</Button>
+          {
+            userResult === "Correct" &&
+            <Button>Next</Button>
+          }
           <Popover>
             <PopoverTrigger disabled={userAnswer==="-" || (userAnswer==="-" && userResult===null)}>
-              <Button disabled={userAnswer==="-" || (userAnswer==="-" && userResult===null)} onClick={handleSubmit}>Submit</Button>
+              <Button disabled={userAnswer==="-" || (userAnswer==="-" && userResult===null) || userResult==="Correct"} onClick={handleSubmit}>Submit</Button>
             </PopoverTrigger>
             <PopoverContent align='end'>
               { resultMessage }
