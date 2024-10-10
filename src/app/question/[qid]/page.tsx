@@ -103,12 +103,12 @@ export default function Question({ params }: { params: { qid: string } }) {
               
                 <div className="w-full h-8 flex justify-between items-center bg-neutral-200 border-b-2 border-neutral-950 border-dashed">
                   <div className="flex flex-row">
-                    <span className="flex justify-center items-center bg-neutral-950 text-white h-full aspect-square">
-                      <b>1</b>
+                    <span className="flex justify-center items-center bg-neutral-950 text-white w-full h-8 aspect-square">
+                      <b>{question[0]?.serial_number}</b>
                     </span>
-                    <Bookmark size={20} />
+                    {/*<Bookmark size={20} />*/}
                   </div>
-                  <div>ABC</div>
+                  {/*<div>ABC</div>*/}
                 </div>
 
                 <div className="w-full flex justify-start items-start my-6 font-serif">
