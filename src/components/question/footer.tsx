@@ -1,9 +1,26 @@
 import { Button } from '@/components/ui/button';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { CircleCheck, CircleX } from "lucide-react";
+
 
 const QuestionFooter = (
-  {userAnswer, currentQuestion, questionCount, handleSubmit}:
-  {userAnswer: string, currentQuestion: number, questionCount: number|null, handleSubmit: () => void}
+  {userAnswer, userResult, currentQuestion, questionCount, handleSubmit}:
+  {userAnswer: string, userResult: null|string, currentQuestion: number, questionCount: number|null, handleSubmit: () => void}
 ) => {
+
+  let resultMessage = <></>;
+  if (userResult===null) {
+    resultMessage = <>Submitting your answer...</>;
+  } else {
+    resultMessage = userResult==="Correct" ?
+      <span className="flex flex-row space-x-2"><CircleCheck className="text-green-600" /> <p>{userResult}</p></span> :
+      <span className="flex flex-row space-x-2"><CircleX className="text-destructive" /> <p>{userResult}</p></span>
+  }
+
   return (
     <footer className="bottom-0 flex flex-row justify-center items-center w-full border-t">
       <div className="container h-14 px-10 grid grid-cols-3">
@@ -15,7 +32,14 @@ const QuestionFooter = (
         </div>
         <div className="col-span-1 flex flex-row justify-end items-center space-x-4">
           <Button variant="outline">Previous</Button>
-          <Button variant={userAnswer==="-" ? "secondary" : "default"} onClick={handleSubmit}>Submit</Button>
+          <Popover>
+            <PopoverTrigger disabled={userAnswer==="-" || userResult===null}>
+              <Button disabled={userAnswer==="-" || userResult===null} onClick={handleSubmit}>Submit</Button>
+            </PopoverTrigger>
+            <PopoverContent align='end'>
+              { resultMessage }
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
     </footer>

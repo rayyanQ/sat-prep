@@ -25,6 +25,7 @@ export default function Question({ params }: { params: { qid: string } }) {
   const [count, setCount] = useState<any>(0);
   const [answerData, setAnswerData] = useState<any>(null);
   const [userAnswer, setUserAnswer] = useState<string>("-");
+  const [userResult, setUserResult] = useState<string|null>(null);
 
   async function fetchData() {
 
@@ -65,15 +66,15 @@ export default function Question({ params }: { params: { qid: string } }) {
 
   const handleSubmit = async () => {
     if (userAnswer === "-") {
-      alert("Please select an answer");
       return;
     }
+    setUserResult(null);
     const result = await submitQuestion({
       uid: question[0]?.uid,
       type: question[0]?.question_type,
       answer: userAnswer
     });
-    console.log(result);
+    await setUserResult(result);
   }
 
   return (
@@ -144,6 +145,7 @@ export default function Question({ params }: { params: { qid: string } }) {
         
         <QuestionFooter
           userAnswer={userAnswer}
+          userResult={userResult}
           currentQuestion={question[0]?.serial_number}
           questionCount={count}
           handleSubmit={handleSubmit}
