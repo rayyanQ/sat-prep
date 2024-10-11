@@ -13,6 +13,7 @@ import { RichTextDisplay, RichTextDisplaySkeleton } from "@/components/question/
 import { MCQInput, MCQInputSkeleton } from "@/components/question/mcq-input";
 import { SPRInput } from "@/components/question/spr-input";
 import { QuestionFooter } from "@/components/question/footer";
+import { submitQuestion } from './actions';
 
 import { useState, useEffect } from 'react';
 
@@ -24,6 +25,7 @@ export default function Question({ params }: { params: { qid: string } }) {
   const [count, setCount] = useState<any>(0);
   const [answerData, setAnswerData] = useState<any>(null);
   const [userAnswer, setUserAnswer] = useState<string>("-");
+  const [userResult, setUserResult] = useState<string|null>(null);
 
   async function fetchData() {
 
@@ -38,7 +40,7 @@ export default function Question({ params }: { params: { qid: string } }) {
     // Fetch the question data based on the serial number provided in the url
     let { data: questionData, error: questionError } = await supabase
       .from('questions')
-      .select("*")
+      .select("uid, serial_number, question, context, answer_options, question_type")
       // Filters
       .eq('serial_number', params.qid)
 
@@ -61,6 +63,19 @@ export default function Question({ params }: { params: { qid: string } }) {
 
   }
   useEffect(() => {fetchData()}, []);
+
+  const handleSubmit = async () => {
+    if (userAnswer === "-") {
+      return;
+    }
+    setUserResult(null);
+    const result = await submitQuestion({
+      uid: question[0]?.uid,
+      type: question[0]?.question_type,
+      answer: userAnswer
+    });
+    await setUserResult(result);
+  }
 
   return (
     <div className="flex flex-grow w-full">
@@ -89,12 +104,12 @@ export default function Question({ params }: { params: { qid: string } }) {
               
                 <div className="w-full h-8 flex justify-between items-center bg-neutral-200 border-b-2 border-neutral-950 border-dashed">
                   <div className="flex flex-row">
-                    <span className="flex justify-center items-center bg-neutral-950 text-white h-full aspect-square">
-                      <b>1</b>
+                    <span className="flex justify-center items-center bg-neutral-950 text-white w-full h-8 aspect-square">
+                      <b>{question[0]?.serial_number}</b>
                     </span>
-                    <Bookmark size={20} />
+                    {/*<Bookmark size={20} />*/}
                   </div>
-                  <div>ABC</div>
+                  {/*<div>ABC</div>*/}
                 </div>
 
                 <div className="w-full flex justify-start items-start my-6 font-serif">
@@ -117,7 +132,7 @@ export default function Question({ params }: { params: { qid: string } }) {
                     <div>Error fetching question</div>
                     :
                     question[0]?.question_type === "mcq" ?
-                      <MCQInput options={answerData} selected={userAnswer} handleUpdate={setUserAnswer} />
+                      <MCQInput userResult={userResult} options={answerData} selected={userAnswer} handleUpdate={setUserAnswer} />
                       :
                       <SPRInput />
                 }
@@ -128,7 +143,13 @@ export default function Question({ params }: { params: { qid: string } }) {
 
         </div>
         
-        <QuestionFooter currentQuestion={question[0]?.serial_number} questionCount={count} />
+        <QuestionFooter
+          userAnswer={userAnswer}
+          userResult={userResult}
+          currentQuestion={question[0]?.serial_number}
+          questionCount={count}
+          handleSubmit={handleSubmit}
+        />
       </main>
     </div>
   );

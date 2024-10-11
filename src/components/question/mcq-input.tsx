@@ -7,14 +7,19 @@ type OptionsType = {
   "D": string
 }
 
-const MCQInput = ({options, selected, handleUpdate}: {options: OptionsType, selected: string, handleUpdate: (newVal: string) => void}) => {
+const MCQInput = ({userResult, options, selected, handleUpdate}: {userResult: string|null, options: OptionsType, selected: string, handleUpdate: (newVal: string) => void}) => {
+
+  const handleClick = (val: string) => {
+    if (userResult === "Correct") return;
+    handleUpdate(val);
+  }
 
   return (
     <ol className="w-full space-y-3">
-      <MCQOption title="A" value={options['A']} selected={selected==="A"} handleClick={handleUpdate} />
-      <MCQOption title="B" value={options['B']} selected={selected==="B"} handleClick={handleUpdate} />
-      <MCQOption title="C" value={options['C']} selected={selected==="C"} handleClick={handleUpdate} />
-      <MCQOption title="D" value={options['D']} selected={selected==="D"} handleClick={handleUpdate} />
+      <MCQOption title="A" value={options['A']} selected={selected==="A"} handleClick={handleClick} />
+      <MCQOption title="B" value={options['B']} selected={selected==="B"} handleClick={handleClick} />
+      <MCQOption title="C" value={options['C']} selected={selected==="C"} handleClick={handleClick} />
+      <MCQOption title="D" value={options['D']} selected={selected==="D"} handleClick={handleClick} />
     </ol>
   );
 }
