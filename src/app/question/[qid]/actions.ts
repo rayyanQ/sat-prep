@@ -53,6 +53,7 @@ export async function submitQuestion(questionData: QuestionData) {
     return result;
   }
 
+  return 'Invalid data';
 }
   
   //
