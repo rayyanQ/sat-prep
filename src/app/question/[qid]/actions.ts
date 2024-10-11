@@ -27,16 +27,33 @@ export async function submitQuestion(questionData: QuestionData) {
 
 
     
-  let { data: questions, error } = await supabase
-    .from('questions')
-    .select('correct_answer')
-    .eq('uid', uid)
+    let { data: questions, error } = await supabase
+      .from('questions')
+      .select('correct_answer')
+      .eq('uid', uid)
 
-    if (!error && questions && questions.length > 0) {
-      return answer === questions[0].correct_answer ? 'Correct' : 'Incorrect';
+    if (error || !questions || questions.length == 0) {
+      console.error(error);
+      return 'Question not found';
     }
 
+    const result = answer === questions[0].correct_answer ? 'Correct' : 'Incorrect';
+  
+    const { data: questionAttempt, error: questionAttemptError } = await supabase
+      .from('question_attempts')
+      .insert([
+        {
+          user_uid: userData.user.id,
+          question_uid: uid,
+          user_answer: answer,
+          result: result,
+        },
+      ])
+
+    return result;
   }
+
+}
   
   //
   // JSON.parse(context);
@@ -44,5 +61,3 @@ export async function submitQuestion(questionData: QuestionData) {
   // submit data to the server
   // error handling
   // return success or failure msg
-  return null;
-}

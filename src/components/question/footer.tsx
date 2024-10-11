@@ -5,6 +5,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { LoaderCircle, CircleCheck, CircleX } from "lucide-react";
+import Link from 'next/link';
 
 
 const QuestionFooter = (
@@ -33,7 +34,7 @@ const QuestionFooter = (
         <div className="col-span-1 flex flex-row justify-end items-center space-x-4">
           {
             userResult === "Correct" &&
-            <Button>Next</Button>
+            <Link href={`/question/${currentQuestion+1}`}><Button>Next</Button></Link>
           }
           <Popover>
             <PopoverTrigger disabled={userAnswer==="-" || (userAnswer==="-" && userResult===null)}>

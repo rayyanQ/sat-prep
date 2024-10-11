@@ -132,7 +132,7 @@ export default function Question({ params }: { params: { qid: string } }) {
                     <div>Error fetching question</div>
                     :
                     question[0]?.question_type === "mcq" ?
-                      <MCQInput options={answerData} selected={userAnswer} handleUpdate={setUserAnswer} />
+                      <MCQInput userResult={userResult} options={answerData} selected={userAnswer} handleUpdate={setUserAnswer} />
                       :
                       <SPRInput />
                 }
