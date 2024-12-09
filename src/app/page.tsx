@@ -10,18 +10,22 @@ import { H2 } from "@/components/ui/heading"
 const Home = () => {
   return (
     <main className="w-full flex flex-col justify-center items-start">
+      <UserStats />
       <QuestionSection />
     </main>
   );
 }
 
-async function QuestionSection() {
+async function UserStats() {
   const supabase = createClient()
-
   const { data: userData, error: userError } = await supabase.auth.getUser()
   if (userError || !userData?.user) {
-    redirect('/login')
+    return <></>;
   }
+}
+
+async function QuestionSection() {
+  const supabase = createClient()
   
   // https://tiptap.dev/docs/guides/output-json-html#render
   let { data: questions, error } = await supabase
