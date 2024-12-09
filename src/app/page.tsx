@@ -22,6 +22,12 @@ async function UserStats() {
   if (userError || !userData?.user) {
     return <></>;
   }
+
+  return (
+    <div>
+      <p>Welcome, {userData.user.email}</p>
+    </div>
+  );
 }
 
 async function QuestionSection() {
