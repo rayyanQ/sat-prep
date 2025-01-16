@@ -10,23 +10,8 @@ import { H2 } from "@/components/ui/heading"
 const Home = () => {
   return (
     <main className="w-full flex flex-col justify-center items-start">
-      <UserStats />
       <QuestionSection />
     </main>
-  );
-}
-
-async function UserStats() {
-  const supabase = createClient()
-  const { data: userData, error: userError } = await supabase.auth.getUser()
-  if (userError || !userData?.user) {
-    return <></>;
-  }
-
-  return (
-    <div>
-      <p>Welcome, {userData.user.email}</p>
-    </div>
   );
 }
 
