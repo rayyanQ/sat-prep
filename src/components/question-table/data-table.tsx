@@ -99,7 +99,7 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-        <div className="flex flex-row space-x-2">
+        <div className="flex flex-row space-x-2 overflow-x-auto">
           {
             filters.map((filter) => (
               <FilterDropdown

@@ -54,11 +54,20 @@ import TableRow from '@tiptap/extension-table-row'
 import TableHeader from '@tiptap/extension-table-header'
 import TableCell from '@tiptap/extension-table-cell'
 
-import { use, useEffect, useState } from 'react'
+import { createClient } from '@/lib/supabase/client'
+import { useEffect, useState } from 'react'
 import 'katex/dist/katex.min.css'
 
 // Rich text editor with the menu bar
-const RichTextEditor = ({ submitted, handleSubmit, placeholder="Start typing here..." }: { submitted: boolean, handleSubmit: (data: object) => void, placeholder: string }) => {
+const RichTextEditor = ({
+  submitted,
+  handleSubmit,
+  placeholder="Start typing here..."
+}: {
+  submitted: boolean,
+  handleSubmit: (data: object) => void,
+  placeholder: string
+}) => {
 
   const editor = useEditor({
     extensions: [
@@ -121,7 +130,12 @@ const RichTextEditor = ({ submitted, handleSubmit, placeholder="Start typing her
 
 // Menu bar for the Tiptap editor
 const MenuBar = ({ editor }: { editor: Editor | null }) => {
+
+  const supabase = createClient();
+
   const [value, setValue] = useState("P"); // TODO: rename variables
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   if (!editor) {
     return null
@@ -160,6 +174,35 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
     }
     setValue(value)
   }
+
+  const handleImageCapture = (event: any) => {
+    const file = event.target.files[0];
+    setSelectedImage(file);
+  };
+
+  const handleImageUpload = async (e: any) => {
+
+    if (!selectedImage) {
+      console.error("You need to select an image first");
+      return;
+    }
+
+    const imageName = new Date().toString() + selectedImage.name;
+    const { data, error } = await supabase.storage
+      .from('questions')
+      .upload(imageName, selectedImage)
+    
+    if (!data || error) {
+      console.error('Error uploading image:', error);
+      return;
+    }
+
+    const uploadedImageUrl = "https://unvczestiglhplbaadml.supabase.co/storage/v1/object/public/" + data.fullPath;
+    setImageUrl(uploadedImageUrl);
+    editor.commands.setImage({
+      src: uploadedImageUrl
+    })
+  };
   
   return (
     <div className="flex flex-row justify-between w-full border rounded p-1 mb-1">
@@ -213,8 +256,8 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
             </Button>
           </PopoverTrigger>
           <PopoverContent className="flex flex-col gap-2">
-            <Input type="file" />
-            <Button>Upload</Button>
+            <Input type="file" onChange={handleImageCapture} />
+            <Button onClick={handleImageUpload}>Upload</Button>
           </PopoverContent>
         </Popover>
         <Button variant="outline" size="icon" aria-label="Table" onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()}>
