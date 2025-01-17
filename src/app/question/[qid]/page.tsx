@@ -25,6 +25,7 @@ export default function Question({ params }: { params: { qid: string } }) {
   const [answerData, setAnswerData] = useState<any>(null);
   const [userAnswer, setUserAnswer] = useState<string>("-");
 
+  // TODO: move to server action
   async function fetchData() {
 
     const supabase = createClient();
